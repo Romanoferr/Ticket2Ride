@@ -5,10 +5,10 @@ local board = {
     connections = {}
 }
 
--- this has to be normalized to the size of the board and locations coordinates
+-- Isso aqui
 local proportions = {
-    x = 800 / 100,
-    y = 600 / 100
+    x = love.graphics.getWidth() / 80,
+    y = love.graphics.getHeight() / 50
 }
 
 -- Função para ler o arquivo CSV e retornar os dados como uma tabela
@@ -56,11 +56,16 @@ function board.draw()
         local node1 = board.nodes[connection.place1]
         local node2 = board.nodes[connection.place2]
         if node1 and node2 then
-            love.graphics.setColor(1, 1, 1) -- Branco para conexões normais
+            if connection.double_route == "N" then
+                love.graphics.setColor(1, 1, 1) -- Branco para conexões normais
+                love.graphics.setLineWidth(1)
+                love.graphics.line(node1.x * proportions.x, node1.y * proportions.y, node2.x * proportions.x, node2.y * proportions.y) 
+            end
             if connection.double_route == 'Y' then
                 love.graphics.setColor(1, 0, 0) -- Vermelho para conexões duplas
+                love.graphics.setLineWidth(5)
+                love.graphics.line(node1.x * proportions.x, node1.y * proportions.y, node2.x * proportions.x, node2.y * proportions.y) 
             end
-            love.graphics.line(node1.x * proportions.x, node1.y * proportions.y, node2.x * proportions.x, node2.y * proportions.y)
         end
     end
 
