@@ -1,14 +1,10 @@
+local proportions = require("proportions")
+
 -- board.lua 
 
 local board = {
     nodes = {},
     connections = {}
-}
-
--- Isso aqui
-local proportions = {
-    x = love.graphics.getWidth() / 80,
-    y = love.graphics.getHeight() / 50
 }
 
 -- Função para ler o arquivo CSV e retornar os dados como uma tabela
@@ -76,4 +72,5 @@ function board.draw()
     end
 end
 
+-- TODO: PROPORTIONS NÃO FAZ SENTIDO
 return board
