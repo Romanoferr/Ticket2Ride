@@ -1,7 +1,7 @@
 local scoringBoard = {
     board = nil,
-    width = 25, -- largura do tabuleiro
-    height = 15, -- altura do tabuleiro
+    width = 26, -- largura do tabuleiro
+    height = 16, -- altura do tabuleiro
 
     totalSquares = 2 * 25 + 2 * 15,
 
@@ -11,13 +11,30 @@ local scoringBoard = {
 
     -- Está pegando os valores errados
     -- logicalWidth = love.graphics.getWidth(),
-    --logicalHeight = love.graphics.getHeight(),
+    -- logicalHeight = love.graphics.getHeight(),
 }
 
+-- Isso foi uma das piores coisas que eu já fiz na minha vida 
+-- mas não sei como fazer diferente
 function scoringBoard.load()
-    for i = 0, scoringBoard.width do
+    for i = 0, scoringBoard.width-1 do
         table.insert(scoringBoard.squares, { x = i, y = 0, counter = scoringBoard.counter })
             scoringBoard.counter = scoringBoard.counter + 1
+    end
+
+    for j=0, scoringBoard.height-2 do
+        table.insert(scoringBoard.squares, { x = scoringBoard.width-1, y = j+1, counter = scoringBoard.counter })
+            scoringBoard.counter = scoringBoard.counter + 1
+    end
+
+    for i = scoringBoard.width-2, 0, -1 do
+        table.insert(scoringBoard.squares, { x = i, y = scoringBoard.height-1, counter = scoringBoard.counter })
+        scoringBoard.counter = scoringBoard.counter + 1
+    end
+
+    for j = scoringBoard.height-2, 1, -1 do
+        table.insert(scoringBoard.squares, { x = 0, y = j, counter = scoringBoard.counter })
+        scoringBoard.counter = scoringBoard.counter + 1
     end
 end
 
@@ -31,7 +48,7 @@ function scoringBoard.draw()
     for _, square in ipairs(scoringBoard.squares) do
         local drawX = square.x * (1280 / scoringBoard.width)
         local drawY = square.y * (720 / scoringBoard.height)
-        love.graphics.rectangle("line", drawX, drawY, 50, 50) -- Draw square
+        love.graphics.rectangle("line", drawX, drawY, 46, 46) -- Draw square
         love.graphics.print(square.counter, drawX + 5, drawY + 5) -- Draw position inside the square
     end
 end
