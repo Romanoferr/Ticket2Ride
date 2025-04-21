@@ -1,14 +1,11 @@
-local proportions = require("proportions")
-
--- board.lua 
+local json = require("dkjson") -- biblioteca JSON para Lua
 
 local board = {
     nodes = {},
     connections = {}
 }
 
--- Função para ler o arquivo CSV e retornar os dados como uma tabela
--- Essa precisa ir pra outro lugar
+-- Função para ler arquivos CSV
 local function readcsv(filename)
     local data = {}
     for line in love.filesystem.lines(filename) do
@@ -21,18 +18,71 @@ local function readcsv(filename)
     return data
 end
 
+-- Função para ler arquivos JSON
+local function readjson(filename)
+    local content = love.filesystem.read(filename)
+    if not content then
+        error("Failed to read file: " .. filename)
+    end
+    return json.decode(content)
+end
+
+-- Funcao para encontrar um nó pelo local
+local function findNodeByLocation(location)
+    for _, node in pairs(board.nodes) do
+        if node.location == location then
+            return node
+        end
+    end
+    return nil
+end
+
+-- Funcao para calcular o vetor perpendicular
+local function calculatePerpendicular(dx, dy, offset)
+    local perpendicular = { -dy, dx }
+    local length = math.sqrt(perpendicular[1]^2 + perpendicular[2]^2)
+    return { perpendicular[1] / length * offset, perpendicular[2] / length * offset }
+end
+
+-- Função que efetivamente cria o grafo
 local function createGraph()
-    -- Lê os dados do CSV e cria o grafo com informações 
-    local locations = readcsv("ticket2ride_singapore_locations.csv")
-    for i = 2, #locations do -- i = 2 para pular o header do csv
-        local location, x, y = locations[i][1], tonumber(locations[i][2]), tonumber(locations[i][3])
-        board.nodes[location] = {x = x, y = y }
+    local locations = readjson("assets/city_locations.json")
+    for index, coords in pairs(locations) do
+        board.nodes[index] = { location = index, x = coords[1] * love.graphics.getWidth(), y = coords[2] * love.graphics.getHeight() }
     end
 
-    local connections = readcsv("ticket2ride_singapore_connections.csv")
-    for i = 2, #connections do -- i = 2 para pular o header do csv
-        local place1, place2, length, double_route = connections[i][1], connections[i][2], tonumber(connections[i][3]), connections[i][4]
-        table.insert(board.connections, { place1 = place1, place2 = place2, length = length, double_route = double_route})
+    local connections = readcsv("assets/routes.csv")
+    local connectionMap = {}
+    for i = 2, #connections do -- Skip header
+        local cityA, cityB, distance, color = connections[i][1], connections[i][2], tonumber(connections[i][3]), connections[i][4]
+        local key = cityA < cityB and (cityA .. "-" .. cityB) or (cityB .. "-" .. cityA)
+        connectionMap[key] = (connectionMap[key] or 0) + 1
+
+        local nodeA = findNodeByLocation(cityA)
+        local nodeB = findNodeByLocation(cityB)
+
+        if nodeA and nodeB then
+            local dx, dy = (nodeB.x - nodeA.x), (nodeB.y - nodeA.y)
+            local totalLength = math.sqrt(dx^2 + dy^2)
+            local shortenFactor = 10
+            local shortenRatio = shortenFactor / totalLength
+            local x1 = nodeA.x + dx * shortenRatio
+            local y1 = nodeA.y + dy * shortenRatio
+            local x2 = nodeB.x - dx * shortenRatio
+            local y2 = nodeB.y - dy * shortenRatio
+
+            local offset = 8 * (connectionMap[key] - 1)
+            local perpendicular = calculatePerpendicular(dx, dy, offset)
+
+            local segmentDx, segmentDy = (x2 - x1) / distance, (y2 - y1) / distance
+            for segment = 1, distance do
+                local sx1 = x1 + segmentDx * (segment - 1) + perpendicular[1]
+                local sy1 = y1 + segmentDy * (segment - 1) + perpendicular[2]
+                local sx2 = x1 + segmentDx * segment + perpendicular[1]
+                local sy2 = y1 + segmentDy * segment + perpendicular[2]
+                table.insert(board.connections, { x1 = sx1, y1 = sy1, x2 = sx2, y2 = sy2, color = color })
+            end
+        end
     end
 end
 
@@ -45,32 +95,29 @@ function board.update(dt)
 end
 
 function board.draw()
-    -- TODO: Aqui faz sentido upar a imagem do tabuleiro por trás da imagem dos nós
+    local colorMap = {
+        R = {1, 0, 0}, -- Red
+        B = {0, 0, 1}, -- Blue
+        G = {0, 1, 0}, -- Green
+        Y = {1, 1, 0}, -- Yellow
+        O = {1, 0.5, 0}, -- Orange
+        P = {0.5, 0, 0.5}, -- Purple
+        K = {0, 0, 0}, -- Black
+        W = {1, 1, 1}  -- White
+    }
 
-    -- Desenha conexões
+    -- Draw connections
     for _, connection in ipairs(board.connections) do
-        local node1 = board.nodes[connection.place1]
-        local node2 = board.nodes[connection.place2]
-        if node1 and node2 then
-            if connection.double_route == "N" then
-                love.graphics.setColor(1, 1, 1) -- Branco para conexões normais
-                love.graphics.setLineWidth(1)
-                love.graphics.line(node1.x * proportions.x, node1.y * proportions.y, node2.x * proportions.x, node2.y * proportions.y) 
-            end
-            if connection.double_route == 'Y' then
-                love.graphics.setColor(1, 0, 0) -- Vermelho para conexões duplas
-                love.graphics.setLineWidth(5)
-                love.graphics.line(node1.x * proportions.x, node1.y * proportions.y, node2.x * proportions.x, node2.y * proportions.y) 
-            end
-        end
+        local color = colorMap[connection.color] or {0.5, 0.5, 0.5} -- Default Gray
+        love.graphics.setColor(color)
+        love.graphics.line(connection.x1, connection.y1, connection.x2, connection.y2)
     end
 
-    -- Desenha nós
+    -- Draw nodes
     for _, node in pairs(board.nodes) do
-        love.graphics.setColor(0, 0, 1)
-        love.graphics.circle("fill", node.x * proportions.x, node.y * proportions.y, 5)
+        love.graphics.setColor(0, 0, 1) -- Blue for nodes
+        love.graphics.circle("fill", node.x, node.y, 5)
     end
 end
 
--- TODO: PROPORTIONS NÃO FAZ SENTIDO
 return board

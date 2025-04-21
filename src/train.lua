@@ -1,36 +1,30 @@
 -- train.lua
+local board = require "board"
 
 local train = {}
-local selectedTrain = nil 
-local board = require "board"
-local proportions = require "proportions"
+local selectedTrain = nil
 local snapDistance=10
 
 local function snapToConnection(train)
     for _, connection in ipairs(board.connections) do
-        local node1 = board.nodes[connection.place1]
-        local node2 = board.nodes[connection.place2]
-        if node1 and node2 then
-            -- Scale node positions using proportions
-            local x1, y1 = node1.x * proportions.x, node1.y * proportions.y
-            local x2, y2 = node2.x * proportions.x, node2.y * proportions.y
+        local x1, y1 = connection.x1, connection.y1
+        local x2, y2 = connection.x2, connection.y2
 
-            -- Calculate the closest point on the line segment to the train
-            local px, py = train.x, train.y
-            local dx, dy = x2 - x1, y2 - y1
-            local lengthSquared = dx * dx + dy * dy
-            local t = ((px - x1) * dx + (py - y1) * dy) / lengthSquared
-            t = math.max(0, math.min(1, t)) -- Clamp t to [0, 1]
-            local closestX = x1 + t * dx
-            local closestY = y1 + t * dy
+        -- Calcula a projeção do trem na linhas
+        local px, py = train.x, train.y
+        local dx, dy = x2 - x1, y2 - y1
+        local lengthSquared = dx * dx + dy * dy
+        local t = ((px - x1) * dx + (py - y1) * dy) / lengthSquared
+        t = math.max(0, math.min(1, t)) -- Clamp t to [0, 1]
+        local closestX = x1 + t * dx
+        local closestY = y1 + t * dy
 
-            -- Check if the train is within the snap distance
-            local distance = math.sqrt((closestX - px) ^ 2 + (closestY - py) ^ 2)
-            if distance <= snapDistance then
-                train.x = closestX
-                train.y = closestY
-                return
-            end
+        -- checa se trem está próximo o suficiente da linha
+        local distance = math.sqrt((closestX - px) ^ 2 + (closestY - py) ^ 2)
+        if distance <= snapDistance then
+            train.x = closestX
+            train.y = closestY
+            return
         end
     end
 end

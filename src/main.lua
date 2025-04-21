@@ -3,8 +3,8 @@ local gameManager = require "gameManager"
 local settings = {
     fullscreen = false,
     screenScaler = 1,
-    logicalWidth = 960,
-    logicalHeight = 540
+    logicalWidth = 1280,
+    logicalHeight = 720
 }
 
 
