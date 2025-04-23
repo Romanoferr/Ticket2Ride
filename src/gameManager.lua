@@ -3,6 +3,7 @@
 local board = require "board"
 local train = require "train"
 local scoringBoard = require("scoringBoard")
+local tickets = require("destinationTicketCards")
 
 local gameManager = {
     score = 0,
@@ -15,6 +16,7 @@ function gameManager.load()
     board.load()
     train.load()
     scoringBoard.load()
+    tickets.load()
     -- Additional game manager initialization if needed
 end
 
@@ -31,6 +33,7 @@ function gameManager.draw()
     board.draw()
     train.draw()
     scoringBoard.draw()
+    tickets.draw()
     -- Additional game manager drawing logic if needed
 end
 
