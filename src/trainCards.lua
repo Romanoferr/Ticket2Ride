@@ -2,7 +2,7 @@ local lovebird = require "libs.lovebird" -- Debugging tool
 
 local trainCards = {}
 
-local colorMap = {
+trainCards.colorMap = { -- Expose colorMap
     R = "Red",
     B = "Blue",
     G = "Green",
@@ -21,7 +21,7 @@ local deck = {}
 
 -- Initialize the deck with 15 cards for each color
 local function initializeDeck()
-    for color, _ in pairs(colorMap) do
+    for color, _ in pairs(trainCards.colorMap) do
         for i = 1, cardColorCount do
             table.insert(deck, color)
         end
@@ -42,9 +42,9 @@ function trainCards.load()
     --[[
 
     drawnCard = trainCards.drawCard() -- Testando a função drawCard na inicialização
-    lovebird.print(string.format("Drawn Card: %s", colorMap[drawnCard])) -- Testando a função drawCard na inicialização
+    lovebird.print(string.format("Drawn Card: %s", trainCards.colorMap[drawnCard])) -- Testando a função drawCard na inicialização
     for i, card in ipairs(deck) do
-        lovebird.print(string.format("Card %d: %s", i, colorMap[card]))
+        lovebird.print(string.format("Card %d: %s", i, trainCards.colorMap[card]))
     end  
     lovebird.print("Deck Size: " .. #deck) -- Testando a função getDeckSize na inicialização
     ]]
@@ -55,9 +55,6 @@ function trainCards.update(dt)
 end
 
 function trainCards.draw()
-    love.graphics.setColor(1, 1, 1)
-    local x, y = 50, 100
-    love.graphics.print(string.format("Random Card: %s", colorMap[deck[1]]), x, y)
 end
 
 -- função para retornar uma carta do deck e removê-la

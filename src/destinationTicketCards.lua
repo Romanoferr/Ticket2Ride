@@ -1,8 +1,9 @@
 local destinationTicketCards = {}
 
-function destinationTicketCards.load()
-    destinationTicketCards.tickets = {}
+local deck = {}
 
+-- Load tickets from a CSV file into the deck
+local function initializeDeck()
     local file = love.filesystem.newFile("assets/tickets.csv", "r")
     if not file then
         error("Failed to open tickets.csv")
@@ -16,25 +17,45 @@ function destinationTicketCards.load()
 
         local ticket = {
             startCity = fields[1],
-            endCity = fields[2], 
+            endCity = fields[2],
             points = tonumber(fields[3])
         }
-        table.insert(destinationTicketCards.tickets, ticket)
+        table.insert(deck, ticket)
     end
 
     file:close()
 end
 
-function destinationTicketCards.draw()
-    love.graphics.setColor(1, 1, 1)
-
-    -- testando um unico ticket
-    local randomTicket = destinationTicketCards.tickets[24]
-    love.graphics.print("Random Ticket: " .. randomTicket.startCity .." to " .. randomTicket.endCity .. " - Points: " .. randomTicket.points, 50, 50)
+-- Shuffle the deck
+local function shuffleDeck()
+    for i = #deck, 2, -1 do
+        local j = math.random(i)
+        deck[i], deck[j] = deck[j], deck[i]
+    end
 end
 
-function destinationTicketCards.getTickets()
-    return destinationTicketCards.tickets
+function destinationTicketCards.load()
+    initializeDeck()
+    shuffleDeck()
+end
+
+function destinationTicketCards.update(dt)
+    -- Update any game state related to destination tickets if needed
+end
+
+function destinationTicketCards.draw()
+    
+end
+
+function destinationTicketCards.drawCard()
+    if #deck == 0 then
+        error("No more cards in the deck!")
+    end
+    return table.remove(deck)
+end
+
+function destinationTicketCards.getDeckSize()
+    return #deck
 end
 
 return destinationTicketCards
