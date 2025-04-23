@@ -1,4 +1,4 @@
-local json = require("dkjson") -- biblioteca JSON para Lua
+local json = require "libs.dkjson" -- biblioteca JSON para Lua
 
 local board = {
     nodes = {},
@@ -106,16 +106,14 @@ function board.draw()
         W = {1, 1, 1}  -- White
     }
 
-    -- Draw connections
     for _, connection in ipairs(board.connections) do
-        local color = colorMap[connection.color] or {0.5, 0.5, 0.5} -- Default Gray
+        local color = colorMap[connection.color] or {0.5, 0.5, 0.5}
         love.graphics.setColor(color)
         love.graphics.line(connection.x1, connection.y1, connection.x2, connection.y2)
     end
 
-    -- Draw nodes
     for _, node in pairs(board.nodes) do
-        love.graphics.setColor(0, 0, 1) -- Blue for nodes
+        love.graphics.setColor(0, 0, 1)
         love.graphics.circle("fill", node.x, node.y, 5)
     end
 end

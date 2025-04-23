@@ -1,17 +1,15 @@
+local lovebird = require "libs.lovebird"
+
 local scoringBoard = {
     board = nil,
     width = 26, -- largura do tabuleiro
     height = 16, -- altura do tabuleiro
 
-    totalSquares = 2 * 25 + 2 * 15,
+    -- totalSquares = 2 * 25 + 2 * 15,
 
     -- inicializa o tabuleiro de pontuação
     squares = {},
     counter = 0,
-
-    -- Está pegando os valores errados
-    -- logicalWidth = love.graphics.getWidth(),
-    -- logicalHeight = love.graphics.getHeight(),
 }
 
 -- Isso foi uma das piores coisas que eu já fiz na minha vida 
@@ -40,16 +38,16 @@ end
 
 
 function scoringBoard.update()
-    
+
 end
 
 function scoringBoard.draw()
     love.graphics.setColor(1, 1, 1)
     for _, square in ipairs(scoringBoard.squares) do
-        local drawX = square.x * (1280 / scoringBoard.width)
-        local drawY = square.y * (720 / scoringBoard.height)
-        love.graphics.rectangle("line", drawX, drawY, 46, 46) -- Draw square
-        love.graphics.print(square.counter, drawX + 5, drawY + 5) -- Draw position inside the square
+        local drawX = square.x * (love.graphics.getWidth() / scoringBoard.width)
+        local drawY = square.y * (love.graphics.getHeight() / scoringBoard.height)
+        love.graphics.rectangle("line", drawX, drawY, 46, 46)
+        love.graphics.print(square.counter, drawX + 5, drawY + 5) 
     end
 end
 

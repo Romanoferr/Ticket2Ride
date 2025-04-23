@@ -1,4 +1,5 @@
 local gameManager = require "gameManager"
+local lovebird = require "libs.lovebird"
 
 local settings = {
     fullscreen = false,
@@ -16,6 +17,7 @@ function love.load()
 end
 
 function love.update(dt)
+    lovebird.update()
     gameManager.update(dt)
 end
 

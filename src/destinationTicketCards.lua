@@ -15,9 +15,9 @@ function destinationTicketCards.load()
         end
 
         local ticket = {
-            startCity = fields[1], -- Corrected index
-            endCity = fields[2],   -- Corrected index
-            points = tonumber(fields[3]) -- Corrected index
+            startCity = fields[1],
+            endCity = fields[2], 
+            points = tonumber(fields[3])
         }
         table.insert(destinationTicketCards.tickets, ticket)
     end
@@ -28,12 +28,9 @@ end
 function destinationTicketCards.draw()
     love.graphics.setColor(1, 1, 1)
 
-    -- Print only the first ticket
-    local ticket = destinationTicketCards.tickets[9]
-    if ticket then
-        local pointsText = ticket.points and tostring(ticket.points) or "N/A" -- Handle nil points - if needed (shouldnt get header)
-        love.graphics.print("Ticket: " .. ticket.startCity .. " to " .. ticket.endCity .. " - Points: " .. pointsText, 50, 50)
-    end
+    -- testando um unico ticket
+    local randomTicket = destinationTicketCards.tickets[24]
+    love.graphics.print("Random Ticket: " .. randomTicket.startCity .." to " .. randomTicket.endCity .. " - Points: " .. randomTicket.points, 50, 50)
 end
 
 function destinationTicketCards.getTickets()
