@@ -9,3 +9,5 @@ obs.: O love2d deve estar instalado no local do primeiro "" e a pasta onde está
 Com o love instalado na sua máquina e adicionado à variável de ambiente PATH na sua máquina, também é possível executar simplesmente com o comando love . na pasta /src
 
 Para poder ter o terminal aberto, execute a .bat no diretório /src do projeto
+
+Para debuging, utilizei a biblioteca lovebird.

@@ -7,14 +7,15 @@ local setupGame = {}
 
 local playerColors = {
     { name = "Green", color = {0, 1, 0} },
-    { name = "Yellow", color = {1, 1, 0} }
+    { name = "Yellow", color = {1, 1, 0} },
+    { name = "Blue", color = {0, 0, 1} }
 }
 
 function setupGame.load()
     local startX, startY = 20, 20 -- posição inicial
     local markerRadius = 5
 
-    for i = 1, 2 do -- 2 jogadores
+    for i = 1, 3 do -- 3 jogadores
         players.add({
             id = i,
             color = playerColors[i].color,
