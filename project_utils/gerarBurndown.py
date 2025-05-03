@@ -105,4 +105,8 @@ data_atual = datetime(2025, 5, 3).date()  # Usando a data fornecida na conversa
 plt.axvline(x=data_atual, color='green', linestyle='-', alpha=0.5, label='Data Atual')
 
 plt.legend()
+
+today = datetime.now().strftime('%d-%m-%Y')
+plt.savefig(f'burndown_chart_{today}.png', dpi=300, bbox_inches='tight')
+
 plt.show()
