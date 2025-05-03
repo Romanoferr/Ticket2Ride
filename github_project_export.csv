@@ -1,45 +1,45 @@
-Closed At,Created At,End date,Estimate,Issue Number,Issue State,Issue Title,Issue URL,Priority,Start date,Status,Tempo real gasto (h),Title
-,2025-05-01T23:09:49Z,,13.0,47,OPEN,5.2 Testes de integração,https://github.com/Romanoferr/Ticket2Ride/issues/47,,,Backlog,,5.2 Testes de integração
-,2025-05-01T23:03:03Z,,2.2,35,OPEN,6.1 Gerar versão 1.0 do executável,https://github.com/Romanoferr/Ticket2Ride/issues/35,,,Backlog,,6.1 Gerar versão 1.0 do executável
-,2025-05-01T23:03:16Z,,2.8,37,OPEN,"6.2 Criar documentação técnica (API, código)",https://github.com/Romanoferr/Ticket2Ride/issues/37,,,Backlog,,"6.2 Criar documentação técnica (API, código)"
-,2025-05-01T23:03:29Z,,2.2,38,OPEN,6.3 Criar manual do jogador (PDF simples ou tela no jogo),https://github.com/Romanoferr/Ticket2Ride/issues/38,,,Backlog,,6.3 Criar manual do jogador (PDF simples ou tela no jogo)
-,2025-05-01T22:57:43Z,,8.0,25,OPEN,4.1.2 Transição de turnos,https://github.com/Romanoferr/Ticket2Ride/issues/25,P0,,Backlog,,4.1.2 Transição de turnos
-,2025-05-01T22:57:57Z,,8.0,27,OPEN,4.2.1 Estratégia de jogada da IA,https://github.com/Romanoferr/Ticket2Ride/issues/27,,,Backlog,,4.2.1 Estratégia de jogada da IA
-,2025-05-01T22:45:08Z,,4.0,2,OPEN,3.2.2 Esboçar tela do tabuleiro,https://github.com/Romanoferr/Ticket2Ride/issues/2,,,Backlog,,3.2.2 Esboçar tela do tabuleiro
-,2025-05-01T22:43:11Z,,1.8,1,OPEN,3.2.1 Esboçar menu principal,https://github.com/Romanoferr/Ticket2Ride/issues/1,,,Backlog,,3.2.1 Esboçar menu principal
-,2025-05-01T23:09:47Z,,3.0,45,OPEN,3.1 Levantamento de assets,https://github.com/Romanoferr/Ticket2Ride/issues/45,,,Backlog,,3.1 Levantamento de assets
-,2025-05-02T00:40:20Z,,5.0,59,OPEN,4.1.1.1 Escolha de uma das 3 possíveis ações do jogador,https://github.com/Romanoferr/Ticket2Ride/issues/59,P0,,Backlog,,4.1.1.1 Escolha de uma das 3 possíveis ações do jogador
-2025-05-03T18:11:13Z,2025-05-01T23:04:41Z,2025-05-06,1.6,41,CLOSED,2.3 Definir ferramentas de controle de tarefas,https://github.com/Romanoferr/Ticket2Ride/issues/41,,2025-05-06,Done,2.0,2.3 Definir ferramentas de controle de tarefas
-,2025-05-01T23:01:03Z,2025-05-05,2.0,32,OPEN,1.9.1 Criar Slides da primeira apresentação,https://github.com/Romanoferr/Ticket2Ride/issues/32,,2025-05-05,Ready,,1.9.1 Criar Slides da primeira apresentação
-,2025-05-01T22:58:23Z,2025-05-04,5.0,29,OPEN,1.6.2 Criar APF,https://github.com/Romanoferr/Ticket2Ride/issues/29,,2025-05-03,Ready,,1.6.2 Criar APF
-2025-05-03T18:11:57Z,2025-05-01T23:04:56Z,2025-05-06,0.5,42,CLOSED,2.4 Definir pessoa responsável pelo acompanhamento,https://github.com/Romanoferr/Ticket2Ride/issues/42,,2025-05-06,Done,,2.4 Definir pessoa responsável pelo acompanhamento
-,2025-05-01T22:55:34Z,2025-05-05,3.2,21,OPEN,1.4 Divisão das tarefas,https://github.com/Romanoferr/Ticket2Ride/issues/21,,2025-05-05,Ready,,1.4 Divisão das tarefas
-,2025-05-01T22:59:47Z,2025-04-27,2.6,31,OPEN,1.8 Estudo de riscos,https://github.com/Romanoferr/Ticket2Ride/issues/31,,2025-04-27,In progress,,1.8 Estudo de riscos
-,2025-05-01T22:56:13Z,2025-05-03,4.2,22,OPEN,1.5 Definição de cronograma e marcos,https://github.com/Romanoferr/Ticket2Ride/issues/22,,2025-05-03,In progress,,1.5 Definição de cronograma e marcos
-,2025-05-01T23:03:52Z,2025-05-03,3.0,39,OPEN,2.1 Planejamento do monitoramento,https://github.com/Romanoferr/Ticket2Ride/issues/39,,2025-05-02,In progress,2.5,2.1 Planejamento do monitoramento
-2025-05-02T15:45:55Z,2025-05-01T22:46:57Z,2025-04-21,1.7,8,CLOSED,1.1.2 Levantamento de Requisitos,https://github.com/Romanoferr/Ticket2Ride/issues/8,,2025-04-21,Done,,1.1.2 Levantamento de Requisitos
-2025-05-03T18:04:30Z,2025-05-01T22:47:57Z,2025-05-03,3.0,11,CLOSED,1.1.4 - EAP,https://github.com/Romanoferr/Ticket2Ride/issues/11,,2025-04-26,Done,5.5,1.1.4 - EAP
-2025-05-02T15:46:27Z,2025-05-01T22:50:20Z,2025-04-22,1.3,18,CLOSED,1.2 Aprendizado das Regras do Jogo,https://github.com/Romanoferr/Ticket2Ride/issues/18,,2025-04-22,Done,,1.2 Aprendizado das Regras do Jogo
-2025-05-03T18:04:28Z,2025-05-01T22:59:24Z,2025-05-03,1.8,30,CLOSED,1.7 Estimar custo e orçamento,https://github.com/Romanoferr/Ticket2Ride/issues/30,,2025-05-02,Done,,1.7 Estimar custo e orçamento
-2025-05-02T15:46:59Z,2025-05-01T22:47:13Z,2025-04-22,1.6,10,CLOSED,1.1.3 Definir regras de negócio ,https://github.com/Romanoferr/Ticket2Ride/issues/10,,2025-04-22,Done,,1.1.3 Definir regras de negócio 
-2025-05-02T15:47:01Z,2025-05-01T22:54:30Z,2025-04-26,1.4,20,CLOSED,1.3 Escolha da Tecnologia,https://github.com/Romanoferr/Ticket2Ride/issues/20,,2025-04-26,Done,1.0,1.3 Escolha da Tecnologia
-2025-05-02T15:47:17Z,2025-05-01T22:46:35Z,2025-04-21,1.6,7,CLOSED,1.1.1 Especificação do escopo,https://github.com/Romanoferr/Ticket2Ride/issues/7,,2025-04-21,Done,,1.1.1 Especificação do escopo
-2025-05-02T15:47:31Z,2025-05-01T22:57:39Z,2025-05-01,3.0,23,CLOSED,1.6.1 Realizar Planning Poker,https://github.com/Romanoferr/Ticket2Ride/issues/23,,2025-05-01,Done,,1.6.1 Realizar Planning Poker
-,2025-05-01T23:01:26Z,,2.0,34,OPEN,1.9.3 Criar Slides da terceira apresentação,https://github.com/Romanoferr/Ticket2Ride/issues/34,,,Backlog,,1.9.3 Criar Slides da terceira apresentação
-,2025-05-01T23:04:26Z,,2.2,40,OPEN,2.2 Controle de progresso das tarefas,https://github.com/Romanoferr/Ticket2Ride/issues/40,P0,,Backlog,,2.2 Controle de progresso das tarefas
-,2025-05-01T22:51:32Z,,1.1,19,OPEN,3.2.3 Esboçar tela de fim de jogo,https://github.com/Romanoferr/Ticket2Ride/issues/19,,,Backlog,,3.2.3 Esboçar tela de fim de jogo
-,2025-05-01T23:09:48Z,,3.6,46,OPEN,3.3.1 Selecionar/criar efeitos sonoros,https://github.com/Romanoferr/Ticket2Ride/issues/46,,,Backlog,,3.3.1 Selecionar/criar efeitos sonoros
-,2025-05-01T23:10:27Z,,2.2,50,OPEN,3.3.2 Integrar sons no jogo,https://github.com/Romanoferr/Ticket2Ride/issues/50,,,Backlog,,3.3.2 Integrar sons no jogo
-,2025-05-02T00:39:01Z,,5.0,56,OPEN,4.1.1.2 Compra de cartas de trem,https://github.com/Romanoferr/Ticket2Ride/issues/56,,,Backlog,,4.1.1.2 Compra de cartas de trem
-,2025-05-02T00:39:51Z,,4.8,58,OPEN,4.1.1.4 Compra de cartas de destino,https://github.com/Romanoferr/Ticket2Ride/issues/58,,,Backlog,,4.1.1.4 Compra de cartas de destino
-,2025-05-02T00:39:27Z,,8.0,57,OPEN,4.1.1.3 Conquista de uma rota,https://github.com/Romanoferr/Ticket2Ride/issues/57,P0,,Backlog,,4.1.1.3 Conquista de uma rota
-,2025-05-01T23:01:15Z,,2.0,33,OPEN,1.9.2 Criar Slides da segunda apresentação,https://github.com/Romanoferr/Ticket2Ride/issues/33,,,Backlog,,1.9.2 Criar Slides da segunda apresentação
-,2025-05-01T22:57:50Z,,2.6,26,OPEN,4.1.3 Verificar fim de jogo,https://github.com/Romanoferr/Ticket2Ride/issues/26,,,Backlog,,4.1.3 Verificar fim de jogo
-,2025-05-01T22:58:04Z,,3.4,28,OPEN,4.2.2 Implementar comportamento da IA,https://github.com/Romanoferr/Ticket2Ride/issues/28,,,Backlog,,4.2.2 Implementar comportamento da IA
-,2025-05-01T22:50:16Z,,13.0,17,OPEN,4.3 Suporte a múltiplos jogadores online,https://github.com/Romanoferr/Ticket2Ride/issues/17,P0,,Backlog,,4.3 Suporte a múltiplos jogadores online
-,2025-05-01T23:16:52Z,,2.6,52,OPEN,4.4.1 Implementar elementos gráficos da tela de menu principal,https://github.com/Romanoferr/Ticket2Ride/issues/52,,,Backlog,,4.4.1 Implementar elementos gráficos da tela de menu principal
-,2025-05-01T23:17:28Z,,3.4,53,OPEN,4.4.2 Implementar elementos gráficos da tela do tabuleiro,https://github.com/Romanoferr/Ticket2Ride/issues/53,,,Backlog,,4.4.2 Implementar elementos gráficos da tela do tabuleiro
-,2025-05-01T23:19:11Z,,2.2,54,OPEN,4.4.3 Implementar elementos gráficos da tela de fim de jogo,https://github.com/Romanoferr/Ticket2Ride/issues/54,,,Backlog,,4.4.3 Implementar elementos gráficos da tela de fim de jogo
-,2025-05-01T23:09:30Z,,18.0,44,OPEN,5.1 Testes unitários,https://github.com/Romanoferr/Ticket2Ride/issues/44,,,Backlog,,5.1 Testes unitários
-,2025-05-01T23:10:13Z,,5.2,49,OPEN,5.3 Testes de usabilidade,https://github.com/Romanoferr/Ticket2Ride/issues/49,,,Backlog,,5.3 Testes de usabilidade
-,2025-05-01T23:10:47Z,,2.0,51,OPEN,5.4 Testes do executável em diferentes máquinas,https://github.com/Romanoferr/Ticket2Ride/issues/51,,,Backlog,,5.4 Testes do executável em diferentes máquinas
+Closed At,Created At,End date,Estimate,Issue Number,Issue State,Issue Title,Issue URL,Priority,Sprint,Start date,Status,Tempo real gasto (h),Title
+,2025-05-01T23:09:49Z,,13.0,47,OPEN,5.2 Testes de integração,https://github.com/Romanoferr/Ticket2Ride/issues/47,,Sprint 5,,Backlog,,5.2 Testes de integração
+,2025-05-01T23:03:03Z,,2.2,35,OPEN,6.1 Gerar versão 1.0 do executável,https://github.com/Romanoferr/Ticket2Ride/issues/35,,Sprint 5,,Backlog,,6.1 Gerar versão 1.0 do executável
+,2025-05-01T23:03:16Z,,2.8,37,OPEN,"6.2 Criar documentação técnica (API, código)",https://github.com/Romanoferr/Ticket2Ride/issues/37,,Sprint 5,,Backlog,,"6.2 Criar documentação técnica (API, código)"
+,2025-05-01T23:03:29Z,,2.2,38,OPEN,6.3 Criar manual do jogador (PDF simples ou tela no jogo),https://github.com/Romanoferr/Ticket2Ride/issues/38,,Sprint 5,,Backlog,,6.3 Criar manual do jogador (PDF simples ou tela no jogo)
+,2025-05-01T22:57:43Z,,8.0,25,OPEN,4.1.2 Transição de turnos,https://github.com/Romanoferr/Ticket2Ride/issues/25,P0,Sprint 3,,Backlog,,4.1.2 Transição de turnos
+,2025-05-01T22:57:57Z,,8.0,27,OPEN,4.2.1 Estratégia de jogada da IA,https://github.com/Romanoferr/Ticket2Ride/issues/27,,Sprint 2,,Backlog,,4.2.1 Estratégia de jogada da IA
+,2025-05-01T22:45:08Z,,4.0,2,OPEN,3.2.2 Esboçar tela do tabuleiro,https://github.com/Romanoferr/Ticket2Ride/issues/2,,Sprint 2,,Backlog,,3.2.2 Esboçar tela do tabuleiro
+,2025-05-01T22:43:11Z,,1.8,1,OPEN,3.2.1 Esboçar menu principal,https://github.com/Romanoferr/Ticket2Ride/issues/1,,Sprint 2,,Backlog,,3.2.1 Esboçar menu principal
+,2025-05-01T23:09:47Z,,3.0,45,OPEN,3.1 Levantamento de assets,https://github.com/Romanoferr/Ticket2Ride/issues/45,,Sprint 2,,Backlog,,3.1 Levantamento de assets
+,2025-05-02T00:40:20Z,,5.0,59,OPEN,4.1.1.1 Escolha de uma das 3 possíveis ações do jogador,https://github.com/Romanoferr/Ticket2Ride/issues/59,P0,Sprint 2,,Backlog,,4.1.1.1 Escolha de uma das 3 possíveis ações do jogador
+2025-05-03T18:11:13Z,2025-05-01T23:04:41Z,2025-05-06,1.6,41,CLOSED,2.3 Definir ferramentas de controle de tarefas,https://github.com/Romanoferr/Ticket2Ride/issues/41,,Sprint 1,2025-05-06,Done,2.0,2.3 Definir ferramentas de controle de tarefas
+,2025-05-01T23:01:03Z,2025-05-05,2.0,32,OPEN,1.9.1 Criar Slides da primeira apresentação,https://github.com/Romanoferr/Ticket2Ride/issues/32,,Sprint 1,2025-05-05,Ready,,1.9.1 Criar Slides da primeira apresentação
+,2025-05-01T22:58:23Z,2025-05-04,5.0,29,OPEN,1.6.2 Criar APF,https://github.com/Romanoferr/Ticket2Ride/issues/29,,Sprint 1,2025-05-03,Ready,,1.6.2 Criar APF
+2025-05-03T18:11:57Z,2025-05-01T23:04:56Z,2025-05-06,0.5,42,CLOSED,2.4 Definir pessoa responsável pelo acompanhamento,https://github.com/Romanoferr/Ticket2Ride/issues/42,,Sprint 1,2025-05-06,Done,,2.4 Definir pessoa responsável pelo acompanhamento
+,2025-05-01T22:55:34Z,2025-05-05,3.2,21,OPEN,1.4 Divisão das tarefas,https://github.com/Romanoferr/Ticket2Ride/issues/21,,Sprint 1,2025-05-05,Ready,,1.4 Divisão das tarefas
+,2025-05-01T22:59:47Z,2025-04-27,2.6,31,OPEN,1.8 Estudo de riscos,https://github.com/Romanoferr/Ticket2Ride/issues/31,,Sprint 1,2025-04-27,In progress,,1.8 Estudo de riscos
+,2025-05-01T22:56:13Z,2025-05-03,4.2,22,OPEN,1.5 Definição de cronograma e marcos,https://github.com/Romanoferr/Ticket2Ride/issues/22,,Sprint 1,2025-05-03,In progress,,1.5 Definição de cronograma e marcos
+,2025-05-01T23:03:52Z,2025-05-03,3.0,39,OPEN,2.1 Planejamento do monitoramento,https://github.com/Romanoferr/Ticket2Ride/issues/39,,Sprint 1,2025-05-02,In progress,2.5,2.1 Planejamento do monitoramento
+2025-05-02T15:45:55Z,2025-05-01T22:46:57Z,2025-04-21,1.7,8,CLOSED,1.1.2 Levantamento de Requisitos,https://github.com/Romanoferr/Ticket2Ride/issues/8,,Sprint 1,2025-04-21,Done,,1.1.2 Levantamento de Requisitos
+2025-05-03T18:04:30Z,2025-05-01T22:47:57Z,2025-05-03,3.0,11,CLOSED,1.1.4 - EAP,https://github.com/Romanoferr/Ticket2Ride/issues/11,,Sprint 1,2025-04-26,Done,5.5,1.1.4 - EAP
+2025-05-02T15:46:27Z,2025-05-01T22:50:20Z,2025-04-22,1.3,18,CLOSED,1.2 Aprendizado das Regras do Jogo,https://github.com/Romanoferr/Ticket2Ride/issues/18,,Sprint 1,2025-04-22,Done,,1.2 Aprendizado das Regras do Jogo
+2025-05-03T18:04:28Z,2025-05-01T22:59:24Z,2025-05-03,1.8,30,CLOSED,1.7 Estimar custo e orçamento,https://github.com/Romanoferr/Ticket2Ride/issues/30,,Sprint 1,2025-05-02,Done,,1.7 Estimar custo e orçamento
+2025-05-02T15:46:59Z,2025-05-01T22:47:13Z,2025-04-22,1.6,10,CLOSED,1.1.3 Definir regras de negócio ,https://github.com/Romanoferr/Ticket2Ride/issues/10,,Sprint 1,2025-04-22,Done,,1.1.3 Definir regras de negócio 
+2025-05-02T15:47:01Z,2025-05-01T22:54:30Z,2025-04-26,1.4,20,CLOSED,1.3 Escolha da Tecnologia,https://github.com/Romanoferr/Ticket2Ride/issues/20,,Sprint 1,2025-04-26,Done,1.0,1.3 Escolha da Tecnologia
+2025-05-02T15:47:17Z,2025-05-01T22:46:35Z,2025-04-21,1.6,7,CLOSED,1.1.1 Especificação do escopo,https://github.com/Romanoferr/Ticket2Ride/issues/7,,Sprint 1,2025-04-21,Done,,1.1.1 Especificação do escopo
+2025-05-02T15:47:31Z,2025-05-01T22:57:39Z,2025-05-01,3.0,23,CLOSED,1.6.1 Realizar Planning Poker,https://github.com/Romanoferr/Ticket2Ride/issues/23,,Sprint 1,2025-05-01,Done,,1.6.1 Realizar Planning Poker
+,2025-05-01T23:01:26Z,,2.0,34,OPEN,1.9.3 Criar Slides da terceira apresentação,https://github.com/Romanoferr/Ticket2Ride/issues/34,,,,Backlog,,1.9.3 Criar Slides da terceira apresentação
+,2025-05-01T23:04:26Z,,2.2,40,OPEN,2.2 Controle de progresso das tarefas,https://github.com/Romanoferr/Ticket2Ride/issues/40,P0,Sprint 2,,Backlog,,2.2 Controle de progresso das tarefas
+,2025-05-01T22:51:32Z,,1.1,19,OPEN,3.2.3 Esboçar tela de fim de jogo,https://github.com/Romanoferr/Ticket2Ride/issues/19,,Sprint 2,,Backlog,,3.2.3 Esboçar tela de fim de jogo
+,2025-05-01T23:09:48Z,,3.6,46,OPEN,3.3.1 Selecionar/criar efeitos sonoros,https://github.com/Romanoferr/Ticket2Ride/issues/46,,Sprint 3,,Backlog,,3.3.1 Selecionar/criar efeitos sonoros
+,2025-05-01T23:10:27Z,,2.2,50,OPEN,3.3.2 Integrar sons no jogo,https://github.com/Romanoferr/Ticket2Ride/issues/50,,Sprint 3,,Backlog,,3.3.2 Integrar sons no jogo
+,2025-05-02T00:39:01Z,,5.0,56,OPEN,4.1.1.2 Compra de cartas de trem,https://github.com/Romanoferr/Ticket2Ride/issues/56,,Sprint 3,,Backlog,,4.1.1.2 Compra de cartas de trem
+,2025-05-02T00:39:51Z,,4.8,58,OPEN,4.1.1.4 Compra de cartas de destino,https://github.com/Romanoferr/Ticket2Ride/issues/58,,Sprint 3,,Backlog,,4.1.1.4 Compra de cartas de destino
+,2025-05-02T00:39:27Z,,8.0,57,OPEN,4.1.1.3 Conquista de uma rota,https://github.com/Romanoferr/Ticket2Ride/issues/57,P0,Sprint 2,,Backlog,,4.1.1.3 Conquista de uma rota
+,2025-05-01T23:01:15Z,,2.0,33,OPEN,1.9.2 Criar Slides da segunda apresentação,https://github.com/Romanoferr/Ticket2Ride/issues/33,,,,Backlog,,1.9.2 Criar Slides da segunda apresentação
+,2025-05-01T22:57:50Z,,2.6,26,OPEN,4.1.3 Verificar fim de jogo,https://github.com/Romanoferr/Ticket2Ride/issues/26,,Sprint 3,,Backlog,,4.1.3 Verificar fim de jogo
+,2025-05-01T22:58:04Z,,3.4,28,OPEN,4.2.2 Implementar comportamento da IA,https://github.com/Romanoferr/Ticket2Ride/issues/28,,Sprint 3,,Backlog,,4.2.2 Implementar comportamento da IA
+,2025-05-01T22:50:16Z,,13.0,17,OPEN,4.3 Suporte a múltiplos jogadores online,https://github.com/Romanoferr/Ticket2Ride/issues/17,P0,Sprint 4,,Backlog,,4.3 Suporte a múltiplos jogadores online
+,2025-05-01T23:16:52Z,,2.6,52,OPEN,4.4.1 Implementar elementos gráficos da tela de menu principal,https://github.com/Romanoferr/Ticket2Ride/issues/52,,Sprint 3,,Backlog,,4.4.1 Implementar elementos gráficos da tela de menu principal
+,2025-05-01T23:17:28Z,,3.4,53,OPEN,4.4.2 Implementar elementos gráficos da tela do tabuleiro,https://github.com/Romanoferr/Ticket2Ride/issues/53,,Sprint 3,,Backlog,,4.4.2 Implementar elementos gráficos da tela do tabuleiro
+,2025-05-01T23:19:11Z,,2.2,54,OPEN,4.4.3 Implementar elementos gráficos da tela de fim de jogo,https://github.com/Romanoferr/Ticket2Ride/issues/54,,Sprint 3,,Backlog,,4.4.3 Implementar elementos gráficos da tela de fim de jogo
+,2025-05-01T23:09:30Z,,18.0,44,OPEN,5.1 Testes unitários,https://github.com/Romanoferr/Ticket2Ride/issues/44,,Sprint 4,,Backlog,,5.1 Testes unitários
+,2025-05-01T23:10:13Z,,5.2,49,OPEN,5.3 Testes de usabilidade,https://github.com/Romanoferr/Ticket2Ride/issues/49,,Sprint 4,,Backlog,,5.3 Testes de usabilidade
+,2025-05-01T23:10:47Z,,2.0,51,OPEN,5.4 Testes do executável em diferentes máquinas,https://github.com/Romanoferr/Ticket2Ride/issues/51,,Sprint 4,,Backlog,,5.4 Testes do executável em diferentes máquinas
