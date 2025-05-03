@@ -1,4 +1,4 @@
-local json = require("dkjson") -- biblioteca JSON para Lua
+local json = require "libs.dkjson" -- biblioteca JSON para Lua
 
 local board = {
     nodes = {},
@@ -64,7 +64,7 @@ local function createGraph()
         if nodeA and nodeB then
             local dx, dy = (nodeB.x - nodeA.x), (nodeB.y - nodeA.y)
             local totalLength = math.sqrt(dx^2 + dy^2)
-            local shortenFactor = 10
+            local shortenFactor = 20
             local shortenRatio = shortenFactor / totalLength
             local x1 = nodeA.x + dx * shortenRatio
             local y1 = nodeA.y + dy * shortenRatio
@@ -73,15 +73,11 @@ local function createGraph()
 
             local offset = 8 * (connectionMap[key] - 1)
             local perpendicular = calculatePerpendicular(dx, dy, offset)
-
-            local segmentDx, segmentDy = (x2 - x1) / distance, (y2 - y1) / distance
-            for segment = 1, distance do
-                local sx1 = x1 + segmentDx * (segment - 1) + perpendicular[1]
-                local sy1 = y1 + segmentDy * (segment - 1) + perpendicular[2]
-                local sx2 = x1 + segmentDx * segment + perpendicular[1]
-                local sy2 = y1 + segmentDy * segment + perpendicular[2]
-                table.insert(board.connections, { x1 = sx1, y1 = sy1, x2 = sx2, y2 = sy2, color = color })
-            end
+            local sx1 = x1 + perpendicular[1]
+            local sy1 = y1 + perpendicular[2]   
+            local sx2 = x2 + perpendicular[1]
+            local sy2 = y2 + perpendicular[2]
+            table.insert(board.connections, { x1 = sx1, y1 = sy1, x2 = sx2, y2 = sy2, color = color, distance = distance })
         end
     end
 end
@@ -106,16 +102,15 @@ function board.draw()
         W = {1, 1, 1}  -- White
     }
 
-    -- Draw connections
     for _, connection in ipairs(board.connections) do
-        local color = colorMap[connection.color] or {0.5, 0.5, 0.5} -- Default Gray
+        local color = colorMap[connection.color] or {0.5, 0.5, 0.5}
         love.graphics.setColor(color)
         love.graphics.line(connection.x1, connection.y1, connection.x2, connection.y2)
+        love.graphics.print(connection.distance, (connection.x1 + connection.x2) / 2, (connection.y1 + connection.y2) / 2, 0, 1, 1, 0, 0)
     end
 
-    -- Draw nodes
     for _, node in pairs(board.nodes) do
-        love.graphics.setColor(0, 0, 1) -- Blue for nodes
+        love.graphics.setColor(0, 0, 1)
         love.graphics.circle("fill", node.x, node.y, 5)
     end
 end
