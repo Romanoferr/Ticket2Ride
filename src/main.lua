@@ -58,7 +58,18 @@ function love.draw()
         local bx = (ww * 0.5) - (button_width * 0.5)
         local by = (wh * 0.5) - (total_height * 0.5) + cursor_y
 
-        love.graphics.setColor(0.4, 0.4, 0.4, 1.0)
+        local color = { 0.4, 0.4, 0.4, 1.0 }
+
+        local mx, my = love.mouse.getPosition()
+
+        local hot = mx > bx and mx < bx + button_width and
+                my > by and my < by + button_height
+
+        if hot then
+            color = { 0.8, 0.8, 0.9, 1.0 }
+        end
+
+        love.graphics.setColor(unpack(color))
         love.graphics.rectangle(
                 "fill",
                 bx,
