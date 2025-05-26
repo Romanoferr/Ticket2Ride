@@ -50,23 +50,33 @@ function love.draw()
 
     local margin = 16
 
-    local total_height = (button_height + margin) * buttons
+    local total_height = (button_height + margin) * #buttons
 
     local cursor_y = 0
+
+    local bx = (ww * 0.5) - (button_width * 0.5)
+    local by = (wh * 0.5) - (total_height * 0.5) + cursor_y
 
     for i, b in pairs(buttons) do
         love.graphics.setColor(0.4, 0.4, 0.4, 1.0)
         love.graphics.rectangle(
                 "fill",
-                (ww * 0.5) - (button_width * 0.5),
-                (wh * 0.5) - (total_height * 0.5) + cursor_y,
-                button_width,
-                button_height
+                bx,
+                by,
+                button_height,
+                button_width
         )
 
         love.graphics.setColor(0, 0, 0, 1)
 
-        cursor_y = cursor_y + (button_height + margin)
+        love.graphics.print(
+                b.text,
+                font,
+                bx,
+                by
+        )
+
+        cursor_y = cursor_y * (button_height + margin)
     end
 
 end
