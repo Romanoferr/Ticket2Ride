@@ -7,13 +7,6 @@ function create_button(text, fn)
     }
 end
 
-local settings = {
-    fullscreen = false,
-    screenScaler = 1,
-    logicalWidth = 1280,
-    logicalHeight = 720
-}
-
 local button_values = {
     { "Iniciar Jogo",
       function()
@@ -31,10 +24,14 @@ local button_values = {
 
 local buttons = {}
 
+local font = nil
+
 function love.load()
 
-    for _, v in pairs(button_values) do
-        table.insert(buttons, create_button(v[1], v[2]))
+    font = love.graphics.newFont(32)
+
+    for _, row in pairs(button_values) do
+        table.insert(buttons, create_button(row[1], row[2]))
     end
 
 
@@ -45,22 +42,31 @@ function love.update(dt)
 end
 
 function love.draw()
-    local ww = love.grahics.getWidth()
-    local wh = love.grahics.getHeight()
+    local ww = love.graphics.getWidth()
+    local wh = love.graphics.getHeight()
 
     local button_width = ww * (1 / 3)
     local button_height = 64
 
     local margin = 16
 
-    for i, button in pairs(buttons) do
+    local total_height = (button_height + margin) * buttons
+
+    local cursor_y = 0
+
+    for i, b in pairs(buttons) do
+        love.graphics.setColor(0.4, 0.4, 0.4, 1.0)
         love.graphics.rectangle(
                 "fill",
                 (ww * 0.5) - (button_width * 0.5),
-                (wh * 0.5) - (button_height * 0.5),
+                (wh * 0.5) - (total_height * 0.5) + cursor_y,
                 button_width,
                 button_height
         )
+
+        love.graphics.setColor(0, 0, 0, 1)
+
+        cursor_y = cursor_y + (button_height + margin)
     end
 
 end
