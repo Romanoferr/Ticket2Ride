@@ -1,4 +1,5 @@
 local gameManager = require "gameManager"
+local lovebird = require "libs.lovebird"
 
 function create_button(text, fn)
     return {
@@ -42,8 +43,8 @@ function love.load()
 end
 
 function love.update(dt)
-
-
+    lovebird.update()
+    gameManager.update(dt)
 end
 
 function love.draw()
