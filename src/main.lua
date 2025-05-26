@@ -67,12 +67,16 @@ function love.draw()
                 button_height
         )
 
+        local textW = font:getWidth(b.text)
+        local textH = font:getHeight(b.text)
+
         love.graphics.setColor(0, 0, 0, 1)
+
         love.graphics.print(
                 b.text,
                 font,
-                bx,
-                by
+                (ww * 0.5) - textW * 0.5,
+                by + textH * 0.5
         )
 
         cursor_y = cursor_y + (button_height + margin)

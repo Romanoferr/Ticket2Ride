@@ -54,10 +54,11 @@ function love.draw()
 
     local cursor_y = 0
 
-    local bx = (ww * 0.5) - (button_width * 0.5)
-    local by = (wh * 0.5) - (total_height * 0.5) + cursor_y
+    for _, b in pairs(buttons) do
 
-    for i, b in pairs(buttons) do
+        local bx = (ww * 0.5) - (button_width * 0.5)
+        local by = (wh * 0.5) - (total_height * 0.5) + cursor_y
+
         love.graphics.setColor(0.4, 0.4, 0.4, 1.0)
         love.graphics.rectangle(
                 "fill",
@@ -69,11 +70,14 @@ function love.draw()
 
         love.graphics.setColor(0, 0, 0, 1)
 
+        local textW = font:getWidth(b.text)
+        local textH = font:getHeight(b.text)
+
         love.graphics.print(
                 b.text,
                 font,
-                bx,
-                by
+                (ww * 0.5) - textW * 0.5,
+                by + textH * 0.5
         )
 
         cursor_y = cursor_y * (button_height + margin)
