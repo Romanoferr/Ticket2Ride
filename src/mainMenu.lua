@@ -23,6 +23,8 @@ function mainMenu.load()
 
     gameManager = require "gameManager"
 
+    -- load dos botoes e seus valores
+
     button_values = {
         { "Iniciar Jogo",
           function()
@@ -45,8 +47,16 @@ function mainMenu.load()
     end
 
     for i = 1, mainMenu.frameCount do
-        mainMenu.frames[i] =  love.graphics.newImage(string.format("assets/steam_train_frames/frame%03d.png", i))
+        mainMenu.frames[i] = love.graphics.newImage(string.format("assets/steam_train_frames/frame%03d.png", i))
     end
+
+    -- load do titulo e suas dimensoes
+
+    title = love.graphics.newImage("assets/ticket_2_ride_logo.png")
+
+    titleW = title:getWidth()
+    titleH = title:getHeight()
+
 
 end
 
@@ -54,7 +64,7 @@ function mainMenu.update(dt)
     mainMenu.frameTimer = mainMenu.frameTimer + dt
     if mainMenu.frameTimer >= mainMenu.frameDelay then
         mainMenu.frameTimer = mainMenu.frameTimer - mainMenu.frameDelay
-        mainMenu.currentFrame =  mainMenu.currentFrame % mainMenu.frameCount + 1
+        mainMenu.currentFrame = mainMenu.currentFrame % mainMenu.frameCount + 1
     end
 end
 
@@ -71,12 +81,27 @@ function mainMenu.draw()
 
     local cursor_y = 0
 
+    -- desenho do background
+
     love.graphics.draw(mainMenu.frames[mainMenu.currentFrame],
             0,
             0,
             0,
-            ww/mainMenu.frames[mainMenu.currentFrame]:getWidth(),
-            wh/mainMenu.frames[mainMenu.currentFrame]:getHeight())
+            ww / mainMenu.frames[mainMenu.currentFrame]:getWidth(),
+            wh / mainMenu.frames[mainMenu.currentFrame]:getHeight())
+
+    --  desenho do titulo
+
+    titleX = (ww * 0.5) - titleW * 0.5
+
+    love.graphics.draw(
+            title,
+            titleX + 100,
+            0,
+            0,
+            0.5,
+            0.5
+    )
 
     for _, b in ipairs(mainMenu.buttons) do
 
@@ -122,8 +147,6 @@ function mainMenu.draw()
                 (ww * 0.5) - textW * 0.5,
                 by + textH * 0.5
         )
-
-
 
         cursor_y = cursor_y + (button_height + margin)
 
