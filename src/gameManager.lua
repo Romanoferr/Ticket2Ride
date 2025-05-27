@@ -1,5 +1,6 @@
 -- gameManager.lua
 
+local mainMenu = require "main_menu.mainMenu"
 local board = require "board"
 local train = require "train"
 local scoringBoard = require "scoringBoard"
@@ -16,6 +17,7 @@ local gameManager = {
 
 function gameManager.load()
     -- player.load()
+    mainMenu.load()
     board.load()
     train.load()
     scoringBoard.load()
@@ -27,6 +29,7 @@ end
 
 function gameManager.update(dt)
     --player.update(dt)
+    mainMenu.update(dt)
     board.update(dt)
     train.update(dt)
     scoringBoard.update(dt)
@@ -36,6 +39,7 @@ end
 
 function gameManager.draw()
     -- player.draw()
+    mainMenu.draw()
     board.draw()
     train.draw()
     scoringBoard.draw()
