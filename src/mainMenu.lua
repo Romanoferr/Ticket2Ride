@@ -21,7 +21,7 @@ function mainMenu.load()
     button_values = {
         { "Iniciar Jogo",
           function()
-              gameManager.changeState("board")
+              gameManager.changeState("game")
           end },
         { "Opções",
           function()

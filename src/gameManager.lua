@@ -17,40 +17,51 @@ local gameManager = {
 }
 
 local states = {
-    mainMenu = mainMenu,
-    board = board,
-    train = train,
-    scoringBoard = scoringBoard,
-    tickets = tickets,
-    trainCards = trainCards,
-    setupGame = setupGame,
-    players = players,
+    mainMenu = { mainMenu },
+    game = { board,
+             train,
+             scoringBoard,
+             tickets,
+             trainCards,
+             setupGame,
+             players }
 }
-
-function gameManager.changeState(state)
-    print(state)
-    if states[state] then
-        gameManager.state = state
-        states[state].load()
-    end
-end
 
 function gameManager.load()
     -- player.load()
-    states[gameManager.state].load()
+    for _, state in ipairs(states[gameManager.state]) do
+        if state.load then
+            state.load()
+        end
+    end
     -- Additional game manager initialization if needed
 end
 
 function gameManager.update(dt)
     --player.update(dt)
-    states[gameManager.state].update(dt)
+    for _, state in ipairs(states[gameManager.state]) do
+        if state.update then
+            state.update()
+        end
+    end
     -- Additional game manager update logic if needed
 end
 
 function gameManager.draw()
     -- player.draw()
-    states[gameManager.state].draw()
+    for _, state in ipairs(states[gameManager.state]) do
+        if state.draw then
+            state.draw()
+        end
+    end
     -- Additional game manager drawing logic if needed
+end
+
+function gameManager.changeState(state)
+    if states[state] then
+        gameManager.state = state
+        gameManager.load()
+    end
 end
 
 return gameManager
