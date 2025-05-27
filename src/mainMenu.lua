@@ -92,12 +92,14 @@ function mainMenu.draw()
 
     --  desenho do titulo
 
-    titleX = (ww * 0.5) - titleW * 0.5
+    -- 0.75 por que a scala mexe com a centralizacao (0.75 foi um chute)
+    titleX = (ww * 0.75) - (titleW * 0.5)
+    titleY = 0
 
     love.graphics.draw(
             title,
-            titleX + 100,
-            0,
+            titleX,
+            titleY,
             0,
             0.5,
             0.5
