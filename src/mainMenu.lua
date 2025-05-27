@@ -123,6 +123,8 @@ function mainMenu.draw()
                 by + textH * 0.5
         )
 
+
+
         cursor_y = cursor_y + (button_height + margin)
 
     end
