@@ -45,7 +45,7 @@ function mainMenu.load()
     end
 
     for i = 1, mainMenu.frameCount do
-        mainMenu.frames[i] =  love.graphics.newImage(string.format("steam_train_frames/frame%03d.png", i))
+        mainMenu.frames[i] =  love.graphics.newImage(string.format("assets/steam_train_frames/frame%03d.png", i))
     end
 
 end
