@@ -54,6 +54,8 @@ function mainMenu.load()
 
     title = love.graphics.newImage("assets/ticket_2_ride_logo.png")
 
+    woodFrame = love.graphics.newImage("assets/wood_frame_main_menu.png")
+
     titleW = title:getWidth()
     titleH = title:getHeight()
 
@@ -92,7 +94,7 @@ function mainMenu.draw()
 
     --  desenho do titulo
 
-    -- 0.75 por que a scala mexe com a centralizacao (0.75 foi um chute)
+    -- 0.75 por que a escala mexe com a centralizacao (0.75 foi um chute)
     titleX = (ww * 0.75) - (titleW * 0.5)
     titleY = 0
 
@@ -109,8 +111,8 @@ function mainMenu.draw()
 
         b.last = b.now
 
-        local bx = (ww * 0.5) - (button_width * 0.5)
-        local by = (wh * 0.5) - (total_height * 0.5) + cursor_y
+        local bx = (ww * 0.25) - (button_width * 0.5)
+        local by = (wh * 0.7) - (total_height * 0.5) + cursor_y
 
         local color = { 0.4, 0.4, 0.4, 1.0 }
 
@@ -146,7 +148,7 @@ function mainMenu.draw()
         love.graphics.print(
                 b.text,
                 mainMenu.font,
-                (ww * 0.5) - textW * 0.5,
+                (bx * 3) - textW * 0.5,
                 by + textH * 0.5
         )
 
