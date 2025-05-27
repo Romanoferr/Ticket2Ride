@@ -7,7 +7,9 @@ local font = nil
 function create_button(text, fn)
     return {
         text = text,
-        fn = fn
+        fn = fn,
+        now = false,
+        last = false
     }
 end
 
@@ -55,6 +57,8 @@ function love.draw()
 
     for _, b in ipairs(buttons) do
 
+        b.last = b.now
+
         local bx = (ww * 0.5) - (button_width * 0.5)
         local by = (wh * 0.5) - (total_height * 0.5) + cursor_y
 
@@ -64,6 +68,12 @@ function love.draw()
 
         local hot = mx > bx and mx < bx + button_width and
                 my > by and my < by + button_height
+
+        b.now = love.mouse.isDown(1)
+
+        if hot and not b.last and b.now then
+            b.fn()
+        end
 
         if hot then
             color = { 0.8, 0.8, 0.9, 1.0 }
