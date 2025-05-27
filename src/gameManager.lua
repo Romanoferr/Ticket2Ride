@@ -1,7 +1,6 @@
 -- gameManager.lua
 
-
-local mainMenu = require "main_menu.mainMenu"
+local mainMenu = require "mainMenu"
 local board = require "board"
 local train = require "train"
 local scoringBoard = require "scoringBoard"
@@ -17,44 +16,40 @@ local gameManager = {
     -- add other game state variables if needed
 }
 
+local states = {
+    mainMenu = mainMenu,
+    board = board,
+    train = train,
+    scoringBoard = scoringBoard,
+    tickets = tickets,
+    trainCards = trainCards,
+    setupGame = setupGame,
+    players = players,
+}
+
+function gameManager.changeState(state)
+    print(state)
+    if states[state] then
+        gameManager.state = state
+        states[state].load()
+    end
+end
+
 function gameManager.load()
     -- player.load()
-    mainMenu.load()
-    board.load()
-    train.load()
-    scoringBoard.load()
-    tickets.load()
-    trainCards.load()
-    setupGame.load()
+    states[gameManager.state].load()
     -- Additional game manager initialization if needed
 end
 
 function gameManager.update(dt)
     --player.update(dt)
-    if gameManager.state == "mainMenu" then
-        mainMenu.update(dt)
-    else
-        board.update(dt)
-        train.update(dt)
-        scoringBoard.update(dt)
-        trainCards.update(dt)
-    end
+    states[gameManager.state].update(dt)
     -- Additional game manager update logic if needed
 end
 
 function gameManager.draw()
     -- player.draw()
-    if gameManager.state == "mainMenu" then
-        mainMenu.draw()
-    else
-        board.draw()
-        train.draw()
-        scoringBoard.draw()
-        tickets.draw()
-        trainCards.draw()
-        setupGame.draw()
-        players.draw()
-    end
+    states[gameManager.state].draw()
     -- Additional game manager drawing logic if needed
 end
 

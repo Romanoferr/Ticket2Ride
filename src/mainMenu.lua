@@ -1,6 +1,8 @@
+local gameManager
+
 local mainMenu = {
     buttons = {},
-    font = nil
+    font = nil,
 }
 
 function create_button(text, fn)
@@ -12,22 +14,24 @@ function create_button(text, fn)
     }
 end
 
-local button_values = {
-    { "Iniciar Jogo",
-      function()
-          print("Iniciando jogo")
-      end },
-    { "Opções",
-      function()
-          print("Iniciando opções")
-      end },
-    { "Sair",
-      function()
-          love.event.quit(0)
-      end }
-}
-
 function mainMenu.load()
+
+    gameManager = require "gameManager"
+
+    button_values = {
+        { "Iniciar Jogo",
+          function()
+              gameManager.changeState("board")
+          end },
+        { "Opções",
+          function()
+              print("Iniciando opções")
+          end },
+        { "Sair",
+          function()
+              love.event.quit(0)
+          end }
+    }
 
     mainMenu.font = love.graphics.newFont(32)
 
