@@ -3,6 +3,11 @@ local gameManager
 local mainMenu = {
     buttons = {},
     font = nil,
+    frames = {},
+    frameCount = 50,
+    currentFrame = 1,
+    frameTimer = 0,
+    frameDelay = 0.1
 }
 
 function create_button(text, fn)
@@ -39,9 +44,18 @@ function mainMenu.load()
         table.insert(mainMenu.buttons, create_button(row[1], row[2]))
     end
 
+    for i = 1, mainMenu.frameCount do
+        mainMenu.frames[i] =  love.graphics.newImage(string.format("steam_train_frames/frame%03d.png", i))
+    end
+
 end
 
 function mainMenu.update(dt)
+    mainMenu.frameTimer = mainMenu.frameTimer + dt
+    if mainMenu.frameTimer >= mainMenu.frameDelay then
+        mainMenu.frameTimer = mainMenu.frameTimer - mainMenu.frameDelay
+        mainMenu.currentFrame =  mainMenu.currentFrame % mainMenu.frameCount + 1
+    end
 end
 
 function mainMenu.draw()
@@ -56,6 +70,13 @@ function mainMenu.draw()
     local total_height = (button_height + margin) * #mainMenu.buttons
 
     local cursor_y = 0
+
+    love.graphics.draw(mainMenu.frames[mainMenu.currentFrame],
+            0,
+            0,
+            0,
+            ww/mainMenu.frames[mainMenu.currentFrame]:getWidth(),
+            wh/mainMenu.frames[mainMenu.currentFrame]:getHeight())
 
     for _, b in ipairs(mainMenu.buttons) do
 
@@ -93,7 +114,7 @@ function mainMenu.draw()
         local textW = mainMenu.font:getWidth(b.text)
         local textH = mainMenu.font:getHeight(b.text)
 
-        love.graphics.setColor(0, 0, 0, 1)
+        love.graphics.setColor(1, 1, 1, 1)
 
         love.graphics.print(
                 b.text,
@@ -103,6 +124,7 @@ function mainMenu.draw()
         )
 
         cursor_y = cursor_y + (button_height + margin)
+
     end
 
 end

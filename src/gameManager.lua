@@ -41,7 +41,7 @@ function gameManager.update(dt)
     --player.update(dt)
     for _, state in ipairs(states[gameManager.state]) do
         if state.update then
-            state.update()
+            state.update(dt)
         end
     end
     -- Additional game manager update logic if needed
