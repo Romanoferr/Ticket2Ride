@@ -54,8 +54,6 @@ function mainMenu.load()
 
     title = love.graphics.newImage("assets/ticket_2_ride_logo.png")
 
-    woodFrame = love.graphics.newImage("assets/wood_frame_main_menu.png")
-
     titleW = title:getWidth()
     titleH = title:getHeight()
 
@@ -107,6 +105,7 @@ function mainMenu.draw()
             0.5
     )
 
+    -- desenho dos botoes
     for _, b in ipairs(mainMenu.buttons) do
 
         b.last = b.now
