@@ -9,12 +9,10 @@ local mainMenu = {
     frameCount = 50,
     currentFrame = 1,
     frameTimer = 0,
-    frameDelay = 0.1
+    frameDelay = 0.1,
+    button_height = 64,
+    margin = 16
 }
-
-local button_height = 64
-
-local margin = 16
 
 local button_values = {
     { "Iniciar Jogo",
@@ -67,17 +65,16 @@ function mainMenu.draw()
     -- largura do botao
     local button_width = ww * (1 / 3)
 
-    -- distancia entre os botoes
-    local total_height = (button_height + margin) * #mainMenu.buttons
+    -- somatorio da altura dos botoes
+    local total_height = mainMenu.button_height * #mainMenu.buttons
 
+    -- posicionamento vertical do botoes
     local cursor_y = 0
 
     -- desenho do background
-
     menuFunctions.drawBackground(mainMenu, ww, wh)
 
     --  desenho do titulo
-
     menuFunctions.drawTitle(title, ww, titleW)
 
     -- desenho dos botoes
@@ -98,34 +95,23 @@ function mainMenu.draw()
         -- botao selecionado
         b.now = love.mouse.isDown(1)
 
-        local hot = menuFunctions.isHot(mx, my, bx, by, button_width, button_height)
+        -- o mouse esta posicionado na area do botao?
+        local hot = menuFunctions.isHot(mx, my, bx, by, button_width, mainMenu.button_height)
 
+        -- efeito do botao
         menuFunctions.buttonActivation(hot, b)
 
+        -- efeito hover
         menuFunctions.buttonHighlight(hot, color)
 
-        love.graphics.setColor(unpack(color))
+        -- desenho do formato dos botoes
+        menuFunctions.drawRectangles(color, bx, by, button_width, mainMenu)
 
-        love.graphics.rectangle(
-                "fill",
-                bx,
-                by,
-                button_width,
-                button_height
-        )
+        -- desenho do texto
+        menuFunctions.drawText(mainMenu, b, bx, by)
 
-        local textW, textH = mainMenu.font:getWidth(b.text), mainMenu.font:getHeight(b.text)
-
-        love.graphics.setColor(1, 1, 1, 1)
-
-        love.graphics.print(
-                b.text,
-                mainMenu.font,
-                (bx * 3) - textW * 0.5,
-                by + textH * 0.5
-        )
-
-        cursor_y = cursor_y + (button_height + margin)
+        -- atualizacao do posicionamento vertical do botoes
+        cursor_y = cursor_y + (mainMenu.button_height + mainMenu.margin)
 
     end
 

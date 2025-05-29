@@ -94,4 +94,31 @@ function mainMenuFunctions.buttonHighlight(hot, color)
     end
 end
 
+function mainMenuFunctions.drawRectangles(color, bx, by, button_width, mainMenu)
+
+    love.graphics.setColor(unpack(color))
+
+    love.graphics.rectangle(
+            "fill",
+            bx,
+            by,
+            button_width,
+            mainMenu.button_height
+    )
+end
+
+function mainMenuFunctions.drawText(mainMenu, b, bx, by)
+
+    local textW, textH = mainMenu.font:getWidth(b.text), mainMenu.font:getHeight(b.text)
+
+    love.graphics.setColor(1, 1, 1, 1)
+
+    love.graphics.print(
+            b.text,
+            mainMenu.font,
+            (bx * 3) - textW * 0.5,
+            by + textH * 0.5
+    )
+end
+
 return mainMenuFunctions
