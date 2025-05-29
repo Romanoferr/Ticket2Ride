@@ -12,6 +12,10 @@ local mainMenu = {
     frameDelay = 0.1
 }
 
+local button_height = 64
+
+local margin = 16
+
 local button_values = {
     { "Iniciar Jogo",
       function()
@@ -51,77 +55,57 @@ end
 
 function mainMenu.update(dt)
     -- responsavel pela animacao da tela de fundo
-    mainMenu.frameTimer = mainMenu.frameTimer + dt
+    menuFunctions.updateFrames(mainMenu, dt)
 
-    if mainMenu.frameTimer >= mainMenu.frameDelay then
-        mainMenu.frameTimer = mainMenu.frameTimer - mainMenu.frameDelay
-        mainMenu.currentFrame = mainMenu.currentFrame % mainMenu.frameCount + 1
-    end
 end
 
 function mainMenu.draw()
-    local ww = love.graphics.getWidth()
-    local wh = love.graphics.getHeight()
 
+    -- dimensoes da tela
+    local ww, wh = love.graphics.getWidth(), love.graphics.getHeight()
+
+    -- largura do botao
     local button_width = ww * (1 / 3)
-    local button_height = 64
 
-    local margin = 16
-
+    -- distancia entre os botoes
     local total_height = (button_height + margin) * #mainMenu.buttons
 
     local cursor_y = 0
 
     -- desenho do background
 
-    love.graphics.draw(mainMenu.frames[mainMenu.currentFrame],
-            0,
-            0,
-            0,
-            ww / mainMenu.frames[mainMenu.currentFrame]:getWidth(),
-            wh / mainMenu.frames[mainMenu.currentFrame]:getHeight())
+    menuFunctions.drawBackground(mainMenu, ww, wh)
 
     --  desenho do titulo
 
-    -- 0.75 por que a escala mexe com a centralizacao (0.75 foi um chute)
-    titleX = (ww * 0.75) - (titleW * 0.5)
-    titleY = 0
-
-    love.graphics.draw(
-            title,
-            titleX,
-            titleY,
-            0,
-            0.5,
-            0.5
-    )
+    menuFunctions.drawTitle(title, ww, titleW)
 
     -- desenho dos botoes
     for _, b in ipairs(mainMenu.buttons) do
 
+        -- ultima botao selecionado
         b.last = b.now
 
-        local bx = (ww * 0.25) - (button_width * 0.5)
-        local by = (wh * 0.7) - (total_height * 0.5) + cursor_y
-
+        -- cor inicial do botao
         local color = { 0.4, 0.4, 0.4, 1.0 }
 
+        -- posicao  dos botoes em relacao da tela
+        local bx, by = (ww * 0.25) - (button_width * 0.5), (wh * 0.7) - (total_height * 0.5) + cursor_y
+
+        -- posicao do mouse na tela
         local mx, my = love.mouse.getPosition()
 
-        local hot = mx > bx and mx < bx + button_width and
-                my > by and my < by + button_height
-
+        -- botao selecionado
         b.now = love.mouse.isDown(1)
 
-        if hot and not b.last and b.now then
-            b.fn()
-        end
+        local hot = menuFunctions.isHot(mx, my, bx, by, button_width, button_height)
 
-        if hot then
-            color = { 0.8, 0.8, 0.9, 1.0 }
-        end
+        menuFunctions.buttonActivation(hot, b)
+
+        menuFunctions.buttonHighlight(hot, color)
 
         love.graphics.setColor(unpack(color))
+
         love.graphics.rectangle(
                 "fill",
                 bx,
@@ -130,8 +114,7 @@ function mainMenu.draw()
                 button_height
         )
 
-        local textW = mainMenu.font:getWidth(b.text)
-        local textH = mainMenu.font:getHeight(b.text)
+        local textW, textH = mainMenu.font:getWidth(b.text), mainMenu.font:getHeight(b.text)
 
         love.graphics.setColor(1, 1, 1, 1)
 
