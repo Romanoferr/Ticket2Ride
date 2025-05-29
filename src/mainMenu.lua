@@ -1,3 +1,5 @@
+local menuFunctions = require "libs.mainMenuFunctions"
+
 local gameManager
 
 local mainMenu = {
@@ -10,58 +12,47 @@ local mainMenu = {
     frameDelay = 0.1
 }
 
-function create_button(text, fn)
-    return {
-        text = text,
-        fn = fn,
-        now = false,
-        last = false
-    }
-end
+local button_values = {
+    { "Iniciar Jogo",
+      function()
+          gameManager.changeState("game")
+      end },
+    { "Opções",
+      function()
+          print("Iniciando opções")
+      end },
+    { "Sair",
+      function()
+          love.event.quit(0)
+      end }
+}
 
 function mainMenu.load()
 
     gameManager = require "gameManager"
 
-    -- load dos botoes e seus valores
-
-    button_values = {
-        { "Iniciar Jogo",
-          function()
-              gameManager.changeState("game")
-          end },
-        { "Opções",
-          function()
-              print("Iniciando opções")
-          end },
-        { "Sair",
-          function()
-              love.event.quit(0)
-          end }
-    }
+    -- valores da fonte
 
     mainMenu.font = love.graphics.newFont(32)
 
-    for _, row in ipairs(button_values) do
-        table.insert(mainMenu.buttons, create_button(row[1], row[2]))
-    end
+    -- load dos botoes e seus valores
 
-    for i = 1, mainMenu.frameCount do
-        mainMenu.frames[i] = love.graphics.newImage(string.format("assets/steam_train_frames/frame%03d.png", i))
-    end
+    menuFunctions.loadButtons(mainMenu.buttons, button_values)
+
+    -- load dos frames da animacao de background
+
+    menuFunctions.loadBackgroundFrames(mainMenu.frameCount, mainMenu.frames)
 
     -- load do titulo e suas dimensoes
 
-    title = love.graphics.newImage("assets/ticket_2_ride_logo.png")
-
-    titleW = title:getWidth()
-    titleH = title:getHeight()
-
+    title, titleW, titleH = menuFunctions.loadTitle("assets/ticket_2_ride_logo.png")
 
 end
 
 function mainMenu.update(dt)
+    -- responsavel pela animacao da tela de fundo
     mainMenu.frameTimer = mainMenu.frameTimer + dt
+
     if mainMenu.frameTimer >= mainMenu.frameDelay then
         mainMenu.frameTimer = mainMenu.frameTimer - mainMenu.frameDelay
         mainMenu.currentFrame = mainMenu.currentFrame % mainMenu.frameCount + 1
