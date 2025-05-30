@@ -31,4 +31,37 @@ local colors = {
     JOKER = {0.9, 0.9, 0.1} -- Joker (locomotiva)
 }
 
+-- Função para mostrar mensagem temporária
+local function showMessage(text, duration)
+    gameState.message = text
+    gameState.messageTimer = duration or 2.0
+end
+
+-- Inicializar cartas viradas para cima
+local function initializeFaceUpCards()
+    gameState.faceUpCards = {}
+    for i = 1, 5 do
+        if trainCards.getDeckSize() > 0 then
+            table.insert(gameState.faceUpCards, trainCards.drawCard())
+        end
+    end
+    lovebird.print("Face-up cards initialized: " .. #gameState.faceUpCards)
+end
+
+-- Função principal de inicialização
+function trainCardPurchase.load()
+    initializeFaceUpCards()
+    showMessage("Vez do Jogador " .. gameState.currentPlayer, 2)
+end
+
+-- Atualização básica do timer de mensagens
+function trainCardPurchase.update(dt)
+    if gameState.messageTimer > 0 then
+        gameState.messageTimer = gameState.messageTimer - dt
+        if gameState.messageTimer <= 0 then
+            gameState.message = ""
+        end
+    end
+end
+
 return trainCardPurchase
