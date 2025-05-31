@@ -16,15 +16,25 @@ jobs:
     - name: Set up LÖVE2D
       run: |
         sudo apt-get update
-        sudo apt-get install -y love
-    
-    - name: Run tests
-      run: |
-        love tests/run_tests.lua
+        sudo apt-get install -y love xvfb mesa-utils
     
     - name: Verify game loads
+      id: verify
       run: |
         # Create a temporary .love file
         zip -9 -r game.love . -x "*.git*" -x "*.github*" -x "tests/*"
-        # Try to run the game for a short time to verify it loads
-        timeout 5 love game.love || true 
+        # Try to run the game in headless mode
+        if ! timeout 5 love --headless game.love; then
+          echo "::error::Game failed to load properly"
+          exit 1
+        fi
+    
+    - name: Run tests
+      needs: verify
+      run: |
+        # Set up virtual framebuffer
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        export DISPLAY=:99
+        
+        # Run tests with headless mode
+        love --headless tests/run_tests.lua
