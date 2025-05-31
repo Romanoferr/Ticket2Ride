@@ -1,4 +1,4 @@
--- gameManager.lua
+-- gameManager.lua - Atualizado com sistema de compra de cartas
 
 local board = require "board"
 local train = require "train"
@@ -7,43 +7,35 @@ local tickets = require "destinationTicketCards"
 local trainCards = require "trainCards"
 local setupGame = require "setupGame"
 local players = require "players"
+local trainCardPurchase = require "trainCardPurchase" -- NOVO: Sistema de compra
 
 local gameManager = {
     score = 0,
     player = nil,
-    -- add other game state variables if needed
+    gamePhase = "purchase", -- "purchase", "routes", "tickets", etc.
+    showPurchaseInterface = true -- Controla se mostra a interface de compra
 }
 
 function gameManager.load()
-    -- player.load()
     board.load()
     train.load()
     scoringBoard.load()
     tickets.load()
     trainCards.load()
     setupGame.load()
-    -- Additional game manager initialization if needed
+    trainCardPurchase.load() -- NOVO: Inicializa sistema de compra
 end
 
 function gameManager.update(dt)
-    --player.update(dt)
     board.update(dt)
     train.update(dt)
     scoringBoard.update(dt)
     trainCards.update(dt)
-    -- Additional game manager update logic if needed
-end
-
-function gameManager.draw()
-    -- player.draw()
-    board.draw()
-    train.draw()
-    scoringBoard.draw()
-    tickets.draw()
-    trainCards.draw()
-    setupGame.draw()
-    players.draw()    
-    -- Additional game manager drawing logic if needed
+    
+    -- NOVO: Atualiza sistema de compra se estiver ativo
+    if gameManager.gamePhase == "purchase" then
+        trainCardPurchase.update(dt)
+    end
 end
 
 return gameManager
