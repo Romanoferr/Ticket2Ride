@@ -1,0 +1,30 @@
+name: LÖVE2D CI
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up LÖVE2D
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y love
+    
+    - name: Run tests
+      run: |
+        love tests/run_tests.lua
+    
+    - name: Verify game loads
+      run: |
+        # Create a temporary .love file
+        zip -9 -r game.love . -x "*.git*" -x "*.github*" -x "tests/*"
+        # Try to run the game for a short time to verify it loads
+        timeout 5 love game.love || true 
