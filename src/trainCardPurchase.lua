@@ -63,5 +63,37 @@ function trainCardPurchase.update(dt)
         end
     end
 end
+-- Substituir uma carta virada para cima
+local function replaceFaceUpCard(index)
+    if trainCards.getDeckSize() > 0 then
+        gameState.faceUpCards[index] = trainCards.drawCard()
+        lovebird.print("Replaced face-up card at position " .. index)
+    else
+        -- Se acabaram as cartas do deck, remove a carta
+        table.remove(gameState.faceUpCards, index)
+        lovebird.print("No more cards in deck, removed face-up card")
+    end
+end
 
+-- Verificar se há muitas locomotivas nas cartas viradas
+local function checkTooManyLocomotives()
+    local locomotiveCount = 0
+    for _, card in ipairs(gameState.faceUpCards) do
+        if card == "JOKER" then
+            locomotiveCount = locomotiveCount + 1
+        end
+    end
+    
+    -- Se há 3 ou mais locomotivas, embaralha de volta
+    if locomotiveCount >= 3 then
+        lovebird.print("Too many locomotives, reshuffling face-up cards")
+        -- Coloca as cartas de volta no deck (simplificado)
+        for _, card in ipairs(gameState.faceUpCards) do
+            -- Em um jogo real, reembarcaria no deck
+        end
+        initializeFaceUpCards()
+        return true
+    end
+    return false
+end
 return trainCardPurchase
