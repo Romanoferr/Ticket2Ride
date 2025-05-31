@@ -19,7 +19,6 @@ jobs:
         sudo apt-get install -y love xvfb mesa-utils
     
     - name: Verify game loads
-      id: verify
       run: |
         # Create a temporary .love file
         zip -9 -r game.love . -x "*.git*" -x "*.github*" -x "tests/*"
@@ -30,7 +29,6 @@ jobs:
         fi
     
     - name: Run tests
-      needs: verify
       run: |
         # Set up virtual framebuffer
         Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
