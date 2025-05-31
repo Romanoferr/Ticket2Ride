@@ -77,4 +77,37 @@ function gameManager.draw()
                           trainCardPurchase.getCardsDrawnThisTurn() .. "/2", 10, love.graphics.getHeight() - 20)
     end
 end
+-- NOVO: Funções para tratar eventos
+function gameManager.mousepressed(x, y, button)
+    -- Verifica clique no botão de alternar interface
+    if x >= love.graphics.getWidth() - 180 and x <= love.graphics.getWidth() - 10 and 
+       y >= 10 and y <= 50 then
+        gameManager.showPurchaseInterface = not gameManager.showPurchaseInterface
+        return
+    end
+    
+    -- Passa evento para o sistema de compra se estiver ativo
+    if gameManager.gamePhase == "purchase" and gameManager.showPurchaseInterface then
+        trainCardPurchase.mousepressed(x, y, button)
+    end
+end
+
+function gameManager.keypressed(key)
+    -- Alterna entre fases do jogo
+    if key == "tab" then
+        if gameManager.gamePhase == "purchase" then
+            gameManager.gamePhase = "routes"
+            gameManager.showPurchaseInterface = false
+        else
+            gameManager.gamePhase = "purchase" 
+            gameManager.showPurchaseInterface = true
+        end
+        return
+    end
+    
+    -- Passa evento para o sistema de compra se estiver ativo
+    if gameManager.gamePhase == "purchase" and gameManager.showPurchaseInterface then
+        trainCardPurchase.keypressed(key)
+    end
+end
 return gameManager
