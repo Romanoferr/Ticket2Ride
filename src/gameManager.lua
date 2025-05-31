@@ -38,4 +38,43 @@ function gameManager.update(dt)
     end
 end
 
+function gameManager.draw()
+    -- Desenha o tabuleiro de fundo
+    board.draw()
+    
+    --  Interface de compra sobreposta
+    if gameManager.gamePhase == "purchase" and gameManager.showPurchaseInterface then
+        -- Fundo semi-transparente
+        love.graphics.setColor(0, 0, 0, 0.7)
+        love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+        
+        -- Sistema de compra
+        trainCardPurchase.draw()
+    else
+        -- Interface normal do jogo
+        train.draw()
+        scoringBoard.draw()
+        tickets.draw()
+        trainCards.draw()
+        setupGame.draw()
+        players.draw()
+    end
+    
+    -- Botão para alternar interface (canto superior direito)
+    love.graphics.setColor(0.3, 0.3, 0.7)
+    love.graphics.rectangle("fill", love.graphics.getWidth() - 180, 10, 170, 40)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.rectangle("line", love.graphics.getWidth() - 180, 10, 170, 40)
+    
+    local buttonText = gameManager.showPurchaseInterface and "Ver Tabuleiro" or "Comprar Cartas"
+    love.graphics.print(buttonText, love.graphics.getWidth() - 175, 25)
+    
+    -- Informações do jogador atual (sempre visível)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("Fase: " .. gameManager.gamePhase, 10, love.graphics.getHeight() - 40)
+    if gameManager.gamePhase == "purchase" then
+        love.graphics.print("Jogador " .. trainCardPurchase.getCurrentPlayer() .. " - Compras: " .. 
+                          trainCardPurchase.getCardsDrawnThisTurn() .. "/2", 10, love.graphics.getHeight() - 20)
+    end
+end
 return gameManager
