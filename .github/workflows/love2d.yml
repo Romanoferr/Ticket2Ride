@@ -21,8 +21,15 @@ jobs:
     - name: Verify game loads
       id: verify
       run: |
-        # Create a temporary .love file
-        zip -9 -r game.love . -x "*.git*" -x "*.github*" -x "tests/*"
+        # Create a temporary directory for the game
+        mkdir -p temp_game
+        # Copy all files except .git, .github, and tests
+        cp -r src/* temp_game/
+        cp -r assets temp_game/ 2>/dev/null || true
+        # Create the .love file from the temp directory
+        cd temp_game
+        zip -9 -r ../game.love .
+        cd ..
         # Try to run the game in headless mode
         if ! timeout 5 love game.love --headless; then
           echo "::error::Game failed to load properly"
