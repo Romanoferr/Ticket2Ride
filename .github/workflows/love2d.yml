@@ -26,12 +26,22 @@ jobs:
         # Copy all files except .git, .github, and tests
         cp -r src/* temp_game/
         cp -r assets temp_game/ 2>/dev/null || true
+        
+        # Debug: List contents of temp_game
+        echo "Contents of temp_game directory:"
+        ls -la temp_game/
+        
         # Create the .love file from the temp directory
         cd temp_game
         zip -9 -r ../game.love .
         cd ..
-        # Try to run the game in headless mode
-        if ! timeout 5 love game.love --headless; then
+        
+        # Debug: List contents of .love file
+        echo "Contents of game.love:"
+        unzip -l game.love
+        
+        # Try to run the game in headless mode, suppressing ALSA errors
+        if ! ALSA_CARD=none timeout 5 love game.love --headless 2>/dev/null; then
           echo "::error::Game failed to load properly"
           exit 1
         fi
@@ -42,5 +52,5 @@ jobs:
         Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
         export DISPLAY=:99
         
-        # Run tests with headless mode
-        love tests/run_tests.lua --headless
+        # Run tests with headless mode, suppressing ALSA errors
+        ALSA_CARD=none love tests/run_tests.lua --headless 2>/dev/null
