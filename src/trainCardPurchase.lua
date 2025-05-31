@@ -174,4 +174,96 @@ function trainCardPurchase.update(dt)
         end
     end
 end
+
+-- Renderização
+function trainCardPurchase.draw()
+    love.graphics.setColor(1, 1, 1)
+    
+    -- Título
+    love.graphics.print("COMPRA DE CARTAS DE TREM", 20, 20, 0, 1.5, 1.5)
+    
+    -- Informações do turno atual
+    love.graphics.print("Jogador Atual: " .. gameState.currentPlayer, 20, 60)
+    love.graphics.print("Cartas compradas neste turno: " .. gameState.cardsDrawnThisTurn .. "/" .. gameState.maxCardsPerTurn, 20, 80)
+    
+    if canDrawMore() then
+        love.graphics.setColor(0, 1, 0)
+        love.graphics.print("Pode comprar mais cartas", 20, 100)
+    else
+        love.graphics.setColor(1, 0, 0)
+        love.graphics.print("Turno finalizado", 20, 100)
+    end
+    
+    -- Deck
+    love.graphics.setColor(0.4, 0.4, 0.7)
+    love.graphics.rectangle("fill", 50, 150, 100, 140)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.rectangle("line", 50, 150, 100, 140)
+    love.graphics.print("DECK", 75, 190)
+    love.graphics.print("(" .. trainCards.getDeckSize() .. ")", 80, 210)
+    love.graphics.print("Clique para", 60, 240)
+    love.graphics.print("comprar", 70, 255)
+    
+    -- Cartas viradas para cima
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("CARTAS VIRADAS:", 200, 130)
+    
+    for i, card in ipairs(gameState.faceUpCards) do
+        local x = 200 + (i - 1) * 120
+        local y = 150
+        
+        -- Cor da carta
+        local color = colors[card] or {0.5, 0.5, 0.5}
+        love.graphics.setColor(color)
+        love.graphics.rectangle("fill", x, y, 100, 140)
+        
+        -- Borda
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.rectangle("line", x, y, 100, 140)
+        
+        -- Nome da carta
+        love.graphics.setColor(0, 0, 0)
+        local cardName = trainCards.colorMap[card] or card
+        if card == "JOKER" then
+            love.graphics.print("LOCO-", x + 25, y + 60)  
+            love.graphics.print("MOTIVA", x + 20, y + 75)
+        else
+            love.graphics.print(cardName, x + 10, y + 65)
+        end
+        
+        -- Número da carta para clique
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.print(i, x + 5, y + 5)
+    end
+    
+    -- Instruções
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print("INSTRUÇÕES:", 20, 320)
+    love.graphics.print("• Clique no DECK para comprar carta aleatória", 20, 340)
+    love.graphics.print("• Clique nas CARTAS VIRADAS (1-5) para escolher", 20, 360)
+    love.graphics.print("• Máximo 2 cartas por turno", 20, 380)
+    love.graphics.print("• Locomotiva termina o turno imediatamente", 20, 400)
+    love.graphics.print("• Pressione SPACE para passar o turno", 20, 420)
+    
+    -- Cartas dos jogadores (resumido)
+    local startY = 450
+    for i = 1, gameState.totalPlayers do
+        local playerCards = players.getTrainCards(i)
+        local cardCount = #playerCards
+        
+        if i == gameState.currentPlayer then
+            love.graphics.setColor(1, 1, 0) -- Destaque jogador atual
+        else
+            love.graphics.setColor(0.7, 0.7, 0.7)
+        end
+        
+        love.graphics.print("Jogador " .. i .. ": " .. cardCount .. " cartas", 20, startY + (i-1) * 20)
+    end
+    
+    -- Mensagem temporária
+    if gameState.message ~= "" then
+        love.graphics.setColor(1, 1, 0)
+        love.graphics.print(gameState.message, 400, 50, 0, 1.2, 1.2)
+    end
+end
 return trainCardPurchase
