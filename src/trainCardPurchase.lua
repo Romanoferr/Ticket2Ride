@@ -148,4 +148,30 @@ end
 local function canDrawMore()
     return gameState.cardsDrawnThisTurn < gameState.maxCardsPerTurn and not gameState.turnEnded
 end
+
+-- Próximo jogador
+local function nextPlayer()
+    gameState.currentPlayer = (gameState.currentPlayer % gameState.totalPlayers) + 1
+    gameState.cardsDrawnThisTurn = 0
+    gameState.turnEnded = false
+    showMessage("Vez do Jogador " .. gameState.currentPlayer, 1.5)
+    lovebird.print("Next player: " .. gameState.currentPlayer)
+end
+
+-- Atualizar a função update para incluir controle de turnos
+function trainCardPurchase.update(dt)
+    if gameState.messageTimer > 0 then
+        gameState.messageTimer = gameState.messageTimer - dt
+        if gameState.messageTimer <= 0 then
+            gameState.message = ""
+        end
+    end
+    
+    -- Verifica se deve passar o turno automaticamente
+    if not canDrawMore() and gameState.cardsDrawnThisTurn > 0 then
+        if gameState.messageTimer <= 0 then -- Só passa depois da mensagem
+            nextPlayer()
+        end
+    end
+end
 return trainCardPurchase
