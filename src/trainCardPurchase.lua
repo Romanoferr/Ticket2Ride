@@ -96,4 +96,56 @@ local function checkTooManyLocomotives()
     end
     return false
 end
+
+-- Comprar carta do deck
+local function buyFromDeck()
+    if trainCards.getDeckSize() == 0 then
+        showMessage("Deck vazio!", 2)
+        return false
+    end
+    
+    local card = trainCards.drawCard()
+    players.assignTrainCards(gameState.currentPlayer, {card})
+    gameState.cardsDrawnThisTurn = gameState.cardsDrawnThisTurn + 1
+    
+    local cardName = trainCards.colorMap[card] or card
+    showMessage("Comprou " .. cardName .. " do deck", 1.5)
+    lovebird.print("Player " .. gameState.currentPlayer .. " drew " .. cardName .. " from deck")
+    
+    return true
+end
+
+-- Comprar carta virada para cima
+local function buyFaceUpCard(index)
+    if index < 1 or index > #gameState.faceUpCards then
+        return false
+    end
+    
+    local card = gameState.faceUpCards[index]
+    players.assignTrainCards(gameState.currentPlayer, {card})
+    
+    -- Se é locomotiva, termina o turno imediatamente
+    if card == "JOKER" then
+        gameState.cardsDrawnThisTurn = gameState.maxCardsPerTurn
+        gameState.turnEnded = true
+        showMessage("Locomotiva! Turno encerrado", 2)
+        lovebird.print("Player drew locomotive, turn ended")
+    else
+        gameState.cardsDrawnThisTurn = gameState.cardsDrawnThisTurn + 1
+        local cardName = trainCards.colorMap[card] or card
+        showMessage("Comprou " .. cardName, 1.5)
+    end
+    
+    -- Substitui a carta virada
+    replaceFaceUpCard(index)
+    checkTooManyLocomotives()
+    
+    lovebird.print("Player " .. gameState.currentPlayer .. " bought face-up card: " .. (trainCards.colorMap[card] or card))
+    return true
+end
+
+-- Verificar se pode comprar mais cartas
+local function canDrawMore()
+    return gameState.cardsDrawnThisTurn < gameState.maxCardsPerTurn and not gameState.turnEnded
+end
 return trainCardPurchase
