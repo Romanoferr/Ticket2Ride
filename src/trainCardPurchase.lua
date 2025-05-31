@@ -266,4 +266,58 @@ function trainCardPurchase.draw()
         love.graphics.print(gameState.message, 400, 50, 0, 1.2, 1.2)
     end
 end
+
+-- Tratamento de cliques
+function trainCardPurchase.mousepressed(x, y, button)
+    if button ~= 1 or not canDrawMore() then -- Só clique esquerdo e se pode comprar
+        return
+    end
+    
+    -- Clique no deck
+    if x >= 50 and x <= 150 and y >= 150 and y <= 290 then
+        buyFromDeck()
+        return
+    end
+    
+    -- Clique nas cartas viradas
+    for i = 1, #gameState.faceUpCards do
+        local cardX = 200 + (i - 1) * 120
+        local cardY = 150
+        if x >= cardX and x <= cardX + 100 and y >= cardY and y <= cardY + 140 then
+            buyFaceUpCard(i)
+            return
+        end
+    end
+end
+
+-- Tratamento de teclas
+function trainCardPurchase.keypressed(key)
+    if key == "space" then
+        -- Pular turno (apenas se já comprou pelo menos uma carta ou quer passar)
+        if gameState.cardsDrawnThisTurn > 0 or not canDrawMore() then
+            nextPlayer()
+        else
+            showMessage("Compre pelo menos uma carta ou pressione novamente para passar", 2)
+        end
+    end
+    
+    -- Teclas numéricas para cartas viradas
+    local num = tonumber(key)
+    if num and num >= 1 and num <= 5 and canDrawMore() then
+        buyFaceUpCard(num)
+    end
+end
+
+-- Obter estado atual (para integração)
+function trainCardPurchase.getCurrentPlayer()
+    return gameState.currentPlayer
+end
+
+function trainCardPurchase.canDrawCards()
+    return canDrawMore()
+end
+
+function trainCardPurchase.getCardsDrawnThisTurn()
+    return gameState.cardsDrawnThisTurn
+end
 return trainCardPurchase
