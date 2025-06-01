@@ -16,25 +16,24 @@ jobs:
     - name: Set up LÖVE2D
       run: |
         sudo apt-get update
-        sudo apt-get install -y love xvfb mesa-utils libasound2-plugins libopenal1
-        # Configura o ALSA para usar um dispositivo de áudio nulo
-        echo "pcm.!default { type null }" | sudo tee /etc/asound.conf
-        echo "ctl.!default { type null }" | sudo tee -a /etc/asound.conf
-        # Configura o OpenAL para usar um dispositivo nulo
-        echo "drivers = null" | sudo tee /etc/openal/alsoft.conf
-        # Mostra onde o LÖVE está instalado
-        which love
-        ls -l $(which love)
-      
+        sudo apt-get install -y love xvfb mesa-utils
+    
     - name: Verify game loads
+      id: verify
       run: |
-        # Roda LOVE2D com xvfb-run para ter display virtual
-        xvfb-run -a /usr/bin/love "$(pwd)" --version
-        # Try to run the game for 5 seconds to verify it opens
-        timeout 5 xvfb-run -a /usr/bin/love "$(pwd)" || true
-        echo "Jogo abriu com sucesso!"
-
+        # Create a temporary .love file
+        zip -9 -r game.love . -x "*.git*" -x "*.github*" -x "tests/*"
+        # Try to run the game in headless mode
+        if ! timeout 5 love game.love --headless; then
+          echo "::error::Game failed to load properly"
+          exit 1
+        fi
+    
     - name: Run tests
       run: |
-        # add testes aqui
-        echo "Tests completed"
+        # Set up virtual framebuffer
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        export DISPLAY=:99
+        
+        # Run tests with headless mode
+        love tests/run_tests.lua --headless
