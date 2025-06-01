@@ -16,10 +16,12 @@ jobs:
     - name: Set up LÖVE2D
       run: |
         sudo apt-get update
-        sudo apt-get install -y love xvfb mesa-utils libasound2-plugins
+        sudo apt-get install -y love xvfb mesa-utils libasound2-plugins libopenal1
         # Configura o ALSA para usar um dispositivo de áudio nulo
         echo "pcm.!default { type null }" | sudo tee /etc/asound.conf
         echo "ctl.!default { type null }" | sudo tee -a /etc/asound.conf
+        # Configura o OpenAL para usar um dispositivo nulo
+        echo "drivers = null" | sudo tee /etc/openal/alsoft.conf
         # Mostra onde o LÖVE está instalado
         which love
         ls -l $(which love)
