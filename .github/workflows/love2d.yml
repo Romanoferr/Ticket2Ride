@@ -20,13 +20,16 @@ jobs:
         # Configura o ALSA para usar um dispositivo de áudio nulo
         echo "pcm.!default { type null }" | sudo tee /etc/asound.conf
         echo "ctl.!default { type null }" | sudo tee -a /etc/asound.conf
+        # Mostra onde o LÖVE está instalado
+        which love
+        ls -l $(which love)
       
     - name: Verify game loads
       run: |
         # Roda LOVE2D com xvfb-run para ter display virtual
-        xvfb-run -a /usr/games/love "$(pwd)" --version
+        xvfb-run -a /usr/bin/love "$(pwd)" --version
         # Try to run the game for 5 seconds to verify it opens
-        timeout 5 xvfb-run -a /usr/games/love "$(pwd)" || true
+        timeout 5 xvfb-run -a /usr/bin/love "$(pwd)" || true
         echo "Jogo abriu com sucesso!"
 
     - name: Run tests
