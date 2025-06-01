@@ -1,4 +1,4 @@
--- main.lua - Adição de instruções de controle
+-- main.lua - Adição de controle por mouse
 local gameManager = require "gameManager"
 local lovebird = require "libs.lovebird"
 local settings = {
@@ -29,4 +29,8 @@ function love.draw()
     love.graphics.setColor(0.8, 0.8, 0.8)
     love.graphics.print("TAB: Alternar fase do jogo", love.graphics.getWidth() - 200, love.graphics.getHeight() - 60)
     love.graphics.print("Clique no botão: Alternar view", love.graphics.getWidth() - 200, love.graphics.getHeight() - 40)
+end
+-- NOVO: Tratamento de cliques do mouse
+function love.mousepressed(x, y, button, istouch, presses)
+    gameManager.mousepressed(x, y, button)
 end
