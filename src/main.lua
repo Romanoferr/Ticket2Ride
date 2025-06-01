@@ -1,4 +1,4 @@
--- main.lua - Preparação para sistema de compra de cartas
+-- main.lua - Adição de instruções de controle
 local gameManager = require "gameManager"
 local lovebird = require "libs.lovebird"
 local settings = {
@@ -8,7 +8,7 @@ local settings = {
     logicalHeight = 720
 }
 function love.load()
-    love.window.setTitle('Ticket 2 Ride - Compra de Cartas')
+    love.window.setTitle('Ticket 2 Ride - Sistema de Compra de Cartas')
     love.window.setMode(settings.logicalWidth, settings.logicalHeight, {
         resizable=true, 
         vsync=0, 
@@ -24,4 +24,9 @@ function love.update(dt)
 end
 function love.draw()
     gameManager.draw()
+    
+    -- Instruções gerais (canto inferior direito)
+    love.graphics.setColor(0.8, 0.8, 0.8)
+    love.graphics.print("TAB: Alternar fase do jogo", love.graphics.getWidth() - 200, love.graphics.getHeight() - 60)
+    love.graphics.print("Clique no botão: Alternar view", love.graphics.getWidth() - 200, love.graphics.getHeight() - 40)
 end
