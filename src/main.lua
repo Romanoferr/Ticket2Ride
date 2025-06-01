@@ -1,4 +1,4 @@
--- main.lua - Atualizado para incluir sistema de compra de cartas
+
 local gameManager = require "gameManager"
 local lovebird = require "libs.lovebird"
 local settings = {

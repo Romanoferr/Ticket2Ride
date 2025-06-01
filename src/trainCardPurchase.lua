@@ -1,4 +1,4 @@
--- trainCardPurchase.lua
+
 local trainCards = require "trainCards"
 local players = require "players"
 local lovebird = require "libs.lovebird"

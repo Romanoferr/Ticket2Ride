@@ -1,4 +1,4 @@
--- gameManager.lua - Atualizado com sistema de compra de cartas
+
 
 local board = require "board"
 local train = require "train"
@@ -7,7 +7,7 @@ local tickets = require "destinationTicketCards"
 local trainCards = require "trainCards"
 local setupGame = require "setupGame"
 local players = require "players"
-local trainCardPurchase = require "trainCardPurchase" -- NOVO: Sistema de compra
+local trainCardPurchase = require "trainCardPurchase" 
 
 local gameManager = {
     score = 0,
