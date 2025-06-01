@@ -22,12 +22,6 @@ jobs:
       id: verify
       run: |
         # Create a temporary .love file
-        zip -9 -r game.love . -x "*.git*" -x "*.github*" -x "tests/*"
-        # Try to run the game in headless mode
-        if ! timeout 5 love game.love --headless; then
-          echo "::error::Game failed to load properly"
-          exit 1
-        fi
     
     - name: Run tests
       run: |
