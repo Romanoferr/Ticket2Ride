@@ -23,7 +23,7 @@ function gameManager.load()
     tickets.load()
     trainCards.load()
     setupGame.load()
-    trainCardPurchase.load() -- NOVO: Inicializa sistema de compra
+    trainCardPurchase.load() --  Inicializa sistema de compra
 end
 
 function gameManager.update(dt)
@@ -32,7 +32,7 @@ function gameManager.update(dt)
     scoringBoard.update(dt)
     trainCards.update(dt)
     
-    -- NOVO: Atualiza sistema de compra se estiver ativo
+    -- Atualiza sistema de compra se estiver ativo
     if gameManager.gamePhase == "purchase" then
         trainCardPurchase.update(dt)
     end
@@ -77,7 +77,7 @@ function gameManager.draw()
                           trainCardPurchase.getCardsDrawnThisTurn() .. "/2", 10, love.graphics.getHeight() - 20)
     end
 end
--- NOVO: Funções para tratar eventos
+-- Funções para tratar eventos
 function gameManager.mousepressed(x, y, button)
     -- Verifica clique no botão de alternar interface
     if x >= love.graphics.getWidth() - 180 and x <= love.graphics.getWidth() - 10 and 
