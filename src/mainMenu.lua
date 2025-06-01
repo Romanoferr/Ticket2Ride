@@ -1,4 +1,4 @@
-local menuFunctions = require "libs.mainMenuFunctions"
+local menuFunctions = require "src.libs.mainMenuFunctions"
 
 local gameManager
 
@@ -31,7 +31,7 @@ local button_values = {
 
 function mainMenu.load()
 
-    gameManager = require "gameManager"
+    gameManager = require "src.gameManager"
 
     -- valores da fonte
 
@@ -47,7 +47,7 @@ function mainMenu.load()
 
     -- load do titulo e suas dimensoes
 
-    title, titleW, titleH = menuFunctions.loadTitle("assets/ticket_2_ride_logo.png")
+    title, titleW, titleH = menuFunctions.loadTitle("src/assets/ticket_2_ride_logo.png")
 
 end
 

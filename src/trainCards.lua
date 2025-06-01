@@ -1,4 +1,4 @@
-local lovebird = require "libs.lovebird" -- Debugging tool
+local lovebird = require "src.libs.lovebird" -- Debugging tool
 
 local trainCards = {}
 

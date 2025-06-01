@@ -1,5 +1,5 @@
-local trainCards = require "trainCards"
-local lovebird = require "libs.lovebird"
+local trainCards = require "src.trainCards"
+local lovebird = require "src.libs.lovebird"
 
 local players = {}
 

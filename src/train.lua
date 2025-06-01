@@ -1,5 +1,5 @@
 -- train.lua
-local board = require "board"
+local board = require "src.board"
 
 local train = {}
 

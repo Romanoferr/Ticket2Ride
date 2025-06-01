@@ -4,7 +4,7 @@ local deck = {}
 
 -- Load tickets from a CSV file into the deck
 local function initializeDeck()
-    local file = love.filesystem.newFile("assets/tickets.csv", "r")
+    local file = love.filesystem.newFile("src/assets/tickets.csv", "r")
     if not file then
         error("Failed to open tickets.csv")
     end

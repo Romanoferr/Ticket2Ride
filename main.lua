@@ -1,5 +1,5 @@
-local gameManager = require "gameManager"
-local lovebird = require "libs.lovebird"
+local gameManager = require "src.gameManager"
+local lovebird = require "src.libs.lovebird"
 
 local settings = {
     fullscreen = false,

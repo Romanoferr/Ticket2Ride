@@ -23,7 +23,7 @@ end
 function mainMenuFunctions.loadBackgroundFrames(frameCount, frames)
 
     for i = 1, frameCount do
-        frames[i] = love.graphics.newImage(string.format("assets/steam_train_frames/frame%03d.png", i))
+        frames[i] = love.graphics.newImage(string.format("src/assets/steam_train_frames/frame%03d.png", i))
     end
 end
 

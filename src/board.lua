@@ -1,4 +1,4 @@
-local json = require "libs.dkjson" -- biblioteca JSON para Lua
+local json = require "src.libs.dkjson" -- biblioteca JSON para Lua
 
 local board = {
     nodes = {},
@@ -46,12 +46,12 @@ end
 
 -- Função que efetivamente cria o grafo
 local function createGraph()
-    local locations = readjson("assets/city_locations.json")
+    local locations = readjson("src/assets/city_locations.json")
     for index, coords in pairs(locations) do
         board.nodes[index] = { location = index, x = coords[1] * love.graphics.getWidth(), y = coords[2] * love.graphics.getHeight() }
     end
 
-    local connections = readcsv("assets/routes.csv")
+    local connections = readcsv("src/assets/routes.csv")
     local connectionMap = {}
     for i = 2, #connections do -- Skip header
         local cityA, cityB, distance, color = connections[i][1], connections[i][2], tonumber(connections[i][3]), connections[i][4]

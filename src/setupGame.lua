@@ -1,7 +1,7 @@
-local board = require "board"
-local players = require "players"
-local trainCards = require "trainCards" 
-local tickets = require "destinationTicketCards"
+local board = require "src.board"
+local players = require "src.players"
+local trainCards = require "src.trainCards" 
+local tickets = require "src.destinationTicketCards"
 
 local setupGame = {}
 

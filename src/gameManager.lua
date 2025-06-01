@@ -1,13 +1,13 @@
 -- gameManager.lua
 
-local mainMenu = require "mainMenu"
-local board = require "board"
-local train = require "train"
-local scoringBoard = require "scoringBoard"
-local tickets = require "destinationTicketCards"
-local trainCards = require "trainCards"
-local setupGame = require "setupGame"
-local players = require "players"
+local mainMenu = require "src.mainMenu"
+local board = require "src.board"
+local train = require "src.train"
+local scoringBoard = require "src.scoringBoard"
+local tickets = require "src.destinationTicketCards"
+local trainCards = require "src.trainCards"
+local setupGame = require "src.setupGame"
+local players = require "src.players"
 
 local gameManager = {
     state = "mainMenu",

@@ -1,4 +1,4 @@
-local lovebird = require "libs.lovebird"
+local lovebird = require "src.libs.lovebird"
 
 local scoringBoard = {
     board = nil,
