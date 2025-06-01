@@ -1,26 +1,27 @@
+-- main.lua - Preparação para sistema de compra de cartas
 local gameManager = require "gameManager"
 local lovebird = require "libs.lovebird"
-
 local settings = {
     fullscreen = false,
     screenScaler = 1,
     logicalWidth = 1280,
     logicalHeight = 720
 }
-
-
 function love.load()
-    love.window.setTitle( 'Ticket 2 Ride' )
-    love.window.setMode(settings.logicalWidth, settings.logicalHeight, {resizable=true, vsync=0, minwidth=settings.logicalWidth*settings.screenScaler, minheight=settings.logicalHeight*settings.screenScaler})
+    love.window.setTitle('Ticket 2 Ride - Compra de Cartas')
+    love.window.setMode(settings.logicalWidth, settings.logicalHeight, {
+        resizable=true, 
+        vsync=0, 
+        minwidth=settings.logicalWidth*settings.screenScaler, 
+        minheight=settings.logicalHeight*settings.screenScaler
+    })
     love.graphics.setDefaultFilter("nearest", "nearest")
     gameManager.load()
 end
-
 function love.update(dt)
     lovebird.update()
     gameManager.update(dt)
 end
-
 function love.draw()
     gameManager.draw()
 end
