@@ -80,7 +80,7 @@ function mainMenu.draw()
     -- desenho dos botoes
     for _, b in ipairs(mainMenu.buttons) do
 
-        -- ultima botao selecionado
+        -- ultimo botao selecionado
         b.last = b.now
 
         -- cor inicial do botao
