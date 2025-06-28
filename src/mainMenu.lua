@@ -21,7 +21,7 @@ local button_values = {
       end },
     { "Opções",
       function()
-          print("Iniciando opções")
+          gameManager.changeState("opcoes")
       end },
     { "Sair",
       function()

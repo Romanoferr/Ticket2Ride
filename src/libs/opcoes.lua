@@ -1,5 +1,0 @@
-local opcoes = {
-
-}
-
-return opcoes
