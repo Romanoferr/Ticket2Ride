@@ -93,9 +93,9 @@ function opcoes.draw()
 
         local hot = isHot(mousex, mousey, button.bx, button.by, buttonWidth, buttonHeight)
 
-        --buttonActivation(hot, button)
-
         buttonHighlight(hot, color)
+
+        --buttonActivation(hot, button)
 
         love.graphics.setColor(unpack(color))
 

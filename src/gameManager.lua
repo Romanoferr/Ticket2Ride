@@ -7,7 +7,7 @@ local tickets = require "destinationTicketCards"
 local trainCards = require "trainCards"
 local setupGame = require "setupGame"
 local players = require "players"
-local trainCardPurchase = require "trainCardPurchase" 
+local trainCardPurchase = require "trainCardPurchase"
 
 local gameManager = {
     state = "mainMenu",
@@ -36,12 +36,12 @@ function gameManager.load()
             state.load()
         end
     end
-    
+
     -- Initialize train card purchase system when in game state
     if gameManager.state == "game" then
         trainCardPurchase.load()
     end
-    
+
     -- Additional game manager initialization if needed
 end
 
@@ -52,12 +52,12 @@ function gameManager.update(dt)
             state.update(dt)
         end
     end
-    
+
     -- Update train card purchase system if in game and purchase phase
     if gameManager.state == "game" and gameManager.gamePhase == "purchase" then
         trainCardPurchase.update(dt)
     end
-    
+
     -- Additional game manager update logic if needed
 end
 
@@ -66,13 +66,13 @@ function gameManager.draw()
         -- Game-specific drawing logic
         -- Always draw the board as background
         board.draw()
-        
+
         -- Interface de compra sobreposta
         if gameManager.gamePhase == "purchase" and gameManager.showPurchaseInterface then
             -- Fundo semi-transparente
             love.graphics.setColor(0, 0, 0, 0.7)
             love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
-            
+
             -- Sistema de compra
             trainCardPurchase.draw()
         else
@@ -84,21 +84,21 @@ function gameManager.draw()
             setupGame.draw()
             players.draw()
         end
-        
+
         -- Botão para alternar interface (canto superior direito)
         love.graphics.setColor(0.3, 0.3, 0.7)
         love.graphics.rectangle("fill", love.graphics.getWidth() - 180, 10, 170, 40)
         love.graphics.setColor(1, 1, 1)
         love.graphics.rectangle("line", love.graphics.getWidth() - 180, 10, 170, 40)
-        
+
         local buttonText = gameManager.showPurchaseInterface and "Ver Tabuleiro" or "Comprar Cartas"
         love.graphics.print(buttonText, love.graphics.getWidth() - 175, 25)
-        
+
         -- Informações do jogador atual (sempre visível)
         love.graphics.setColor(1, 1, 1)
         love.graphics.print("Fase: " .. gameManager.gamePhase, 10, love.graphics.getHeight() - 40)
         if gameManager.gamePhase == "purchase" then
-            love.graphics.print("Jogador " .. trainCardPurchase.getCurrentPlayer() .. " - Compras: " .. 
+            love.graphics.print("Jogador " .. trainCardPurchase.getCurrentPlayer() .. " - Compras: " ..
                               trainCardPurchase.getCardsDrawnThisTurn() .. "/2", 10, love.graphics.getHeight() - 20)
         end
     else
@@ -109,7 +109,7 @@ function gameManager.draw()
             end
         end
     end
-    
+
     -- Additional game manager drawing logic if needed
 end
 
@@ -117,12 +117,12 @@ end
 function gameManager.mousepressed(x, y, button)
     if gameManager.state == "game" then
         -- Verifica clique no botão de alternar interface
-        if x >= love.graphics.getWidth() - 180 and x <= love.graphics.getWidth() - 10 and 
+        if x >= love.graphics.getWidth() - 180 and x <= love.graphics.getWidth() - 10 and
            y >= 10 and y <= 50 then
             gameManager.showPurchaseInterface = not gameManager.showPurchaseInterface
             return
         end
-        
+
         -- Passa evento para o sistema de compra se estiver ativo
         if gameManager.gamePhase == "purchase" and gameManager.showPurchaseInterface then
             trainCardPurchase.mousepressed(x, y, button)
@@ -138,12 +138,12 @@ function gameManager.keypressed(key)
                 gameManager.gamePhase = "routes"
                 gameManager.showPurchaseInterface = false
             else
-                gameManager.gamePhase = "purchase" 
+                gameManager.gamePhase = "purchase"
                 gameManager.showPurchaseInterface = true
             end
             return
         end
-        
+
         -- Passa evento para o sistema de compra se estiver ativo
         if gameManager.gamePhase == "purchase" and gameManager.showPurchaseInterface then
             trainCardPurchase.keypressed(key)
