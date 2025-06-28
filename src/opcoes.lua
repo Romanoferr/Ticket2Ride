@@ -39,20 +39,12 @@ end
 
 button_values = {
     {
-        "assets/opcoes_menu_checkbutton.png",
-        function()
-            gameManager.changeState("mainMenu")
-        end,
-        400,
-        500
-    },
-    {
         "assets/opcoes_menu_exitbutton.png",
         function()
             gameManager.changeState("mainMenu")
         end,
-        750,
-        500
+        870,
+        30
     }
 }
 
@@ -60,6 +52,8 @@ function opcoes.load()
     gameManager = require "gameManager"
 
     background = love.graphics.newImage("assets/opcoes_menu.png")
+
+    opcoes.buttons = {}
 
     for _, row in ipairs(button_values) do
         table.insert(opcoes.buttons, create_buttons(row[1], row[2], row[3], row[4]))
@@ -95,7 +89,7 @@ function opcoes.draw()
 
         buttonHighlight(hot, color)
 
-        --buttonActivation(hot, button)
+        buttonActivation(hot, button)
 
         love.graphics.setColor(unpack(color))
 

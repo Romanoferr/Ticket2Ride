@@ -39,7 +39,7 @@ function mainMenu.load()
 
     -- load dos botoes e seus valores
 
-    menuFunctions.loadButtons(mainMenu.buttons, button_values)
+    menuFunctions.loadButtons(mainMenu, button_values)
 
     -- load dos frames da animacao de background
 

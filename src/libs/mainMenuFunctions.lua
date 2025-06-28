@@ -15,8 +15,10 @@ end
 
 function mainMenuFunctions.loadButtons(tab, button_values)
 
+    tab.buttons = {}
+
     for _, row in ipairs(button_values) do
-        table.insert(tab, create_button(row[1], row[2]))
+        table.insert(tab.buttons, create_button(row[1], row[2]))
     end
 end
 

@@ -30,6 +30,7 @@ local states = {
 }
 
 function gameManager.load()
+
     -- Use generic state loading for flexibility
     for _, state in ipairs(states[gameManager.state]) do
         if state.load then
@@ -153,7 +154,15 @@ end
 
 function gameManager.changeState(state)
     if states[state] then
+
+        for _, mod in ipairs(states[gameManager.state] or {}) do
+            if mod.unload then
+                mod.unload()
+            end
+        end
+
         gameManager.state = state
+
         gameManager.load()
     end
 end
