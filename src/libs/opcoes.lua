@@ -1,0 +1,5 @@
+local opcoes = {
+
+}
+
+return opcoes

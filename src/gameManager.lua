@@ -1,4 +1,5 @@
 local mainMenu = require "mainMenu"
+local opcoes = require "opcoes"
 local board = require "board"
 local train = require "train"
 local scoringBoard = require "scoringBoard"
@@ -18,6 +19,7 @@ local gameManager = {
 
 local states = {
     mainMenu = { mainMenu },
+    opcoes = {opcoes},
     game = { board,
              train,
              scoringBoard,
