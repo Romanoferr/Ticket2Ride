@@ -32,6 +32,10 @@ local states = {
 
 function gameManager.load()
 
+    sound.load()
+
+    sound.play()
+
     -- Use generic state loading for flexibility
     for _, state in ipairs(states[gameManager.state]) do
         if state.load then

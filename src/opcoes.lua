@@ -54,10 +54,6 @@ button_values = {
 function opcoes.load()
     gameManager = require "gameManager"
 
-    sound.load()
-
-    sound.play()
-
     musica = newSlider(650, 300, 400, sound.getter(), 0, 100, function (v) sound.setter(v) end, "Música")
 
     sfx = newSlider(650, 400, 400, 40, 0, 100, function () end, "SFX")
