@@ -1,5 +1,4 @@
 local mainMenu = require "mainMenu"
-local opcoes = require "opcoes"
 local board = require "board"
 local train = require "train"
 local scoringBoard = require "scoringBoard"
@@ -19,7 +18,6 @@ local gameManager = {
 
 local states = {
     mainMenu = { mainMenu },
-    opcoes = { opcoes },
     game = { board,
              train,
              scoringBoard,
@@ -149,6 +147,11 @@ function gameManager.keypressed(key)
             trainCardPurchase.keypressed(key)
         end
     end
+end
+
+
+function gameManager.setStates(state)
+    gameManager.states = {state}
 end
 
 function gameManager.changeState(state)
