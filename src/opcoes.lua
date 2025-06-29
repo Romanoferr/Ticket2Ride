@@ -1,10 +1,11 @@
-local menuFunctions = require "libs.mainMenuFunctions"
-
 local gameManager
+
+local slider = require "assets/opcoes_menu/slider"
 
 local opcoes = {
     buttons = {}
 }
+
 
 function create_buttons(image, fn, bx, by)
     return {
@@ -39,7 +40,7 @@ end
 
 button_values = {
     {
-        "assets/opcoes_menu_exitbutton.png",
+        "assets/opcoes_menu/opcoes_menu_exitbutton.png",
         function()
             gameManager.changeState("mainMenu")
         end,
@@ -51,7 +52,10 @@ button_values = {
 function opcoes.load()
     gameManager = require "gameManager"
 
-    background = love.graphics.newImage("assets/opcoes_menu.png")
+    musica = newSlider(650, 300, 400, 0.8, 0, 1, function () end)
+    sfx = newSlider(650, 400, 400, 0.8, 0, 1, function () end)
+
+    background = love.graphics.newImage("assets/opcoes_menu/opcoes_menu.png")
 
     opcoes.buttons = {}
 
@@ -61,7 +65,14 @@ function opcoes.load()
 
 end
 
+function opcoes.update(dt)
+    musica:update()
+    sfx:update()
+end
+
 function opcoes.draw()
+
+    local mousex, mousey = love.mouse.getPosition()
 
     local windowWidth, windowHeight = love.graphics.getDimensions()
 
@@ -75,13 +86,23 @@ function opcoes.draw()
 
     love.graphics.draw(background, windowWidth / imageWidth + 250, windowHeight / imageHeight, 0, 0.5, 0.4)
 
+    love.graphics.setLineWidth(6)
+
+    love.graphics.setColor(254, 67, 101)
+
+    musica:draw()
+
+    love.graphics.setLineWidth(6)
+
+    love.graphics.setColor(254, 67, 101)
+
+    sfx:draw()
+
     for _, button in ipairs(opcoes.buttons) do
 
         local color = { 0.7, 0.7, 0.7, 1 }
 
         button.last = button.now
-
-        local mousex, mousey = love.mouse.getPosition()
 
         button.now = love.mouse.isDown(1)
 
