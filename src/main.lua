@@ -34,6 +34,10 @@ end
 function love.mousepressed(x, y, button, istouch, presses)
     gameManager.mousepressed(x, y, button)
 end
+-- Tratamento de movimento do mouse (usado para feedback)
+function love.mousemoved(x, y, dx, dy, istouch)
+    gameManager.mousemoved(x, y, dx, dy)
+end
 --  Tratamento de teclas
 function love.keypressed(key)
     gameManager.keypressed(key)

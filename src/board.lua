@@ -1,8 +1,12 @@
 local json = require "libs.dkjson" -- biblioteca JSON para Lua
+local lovebird = require "libs.lovebird"
 
 local board = {
     nodes = {},
-    connections = {}
+    connections = {},
+    pointerCursor = nil,
+    defaultCursor = nil,
+    hoveredConnection = nil,
 }
 
 -- Função para ler arquivos CSV
@@ -105,6 +109,8 @@ local function isMouseNearConnection(mx, my, x1, y1, x2, y2, threshold)
 end
 
 function board.load()
+    board.pointerCursor = love.mouse.getSystemCursor("hand")
+    board.defaultCursor = love.mouse.getSystemCursor("arrow")
     createGraph()
 end
 
@@ -166,6 +172,14 @@ function board.mousepressed(x, y, button)
     end
 end
 
+-- Tratamento de movimento, mudança de cursor para feedback ao usuário
+function board.mousemoved(x, y, dx, dy)
+    board.hoveredConnection = board.getConnectionUnderMouse(x, y)
+    if board.hoveredConnection then
+        love.mouse.setCursor(board.pointerCursor)
+    else
+        love.mouse.setCursor(board.defaultCursor)
+    end
 end
 
 return board

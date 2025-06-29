@@ -13,7 +13,8 @@ local gameManager = {
     score = 0,
     player = nil,
     gamePhase = "purchase", -- "purchase", "routes", "tickets", etc.
-    showPurchaseInterface = true -- Controla se mostra a interface de compra
+    showPurchaseInterface = true, -- Controla se mostra a interface de compra
+    showRouteConquestConfirm = false, -- Controla se mostra a confirmação de conquista
 }
 
 local states = {
@@ -127,6 +128,15 @@ function gameManager.mousepressed(x, y, button)
         -- Passa evento para o sistema de compra se estiver ativo
         if gameManager.gamePhase == "purchase" and gameManager.showPurchaseInterface then
             trainCardPurchase.mousepressed(x, y, button)
+        end
+    end
+end
+
+-- Funções para tratar eventos
+function gameManager.mousemoved(x, y, dx, dy)
+    if gameManager.state == "game" then
+        if gameManager.gamePhase == "routes" and not gameManager.showRouteConquestConfirm then
+            board.mousemoved(x, y, dx, dy)
         end
     end
 end
