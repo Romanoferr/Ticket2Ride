@@ -119,6 +119,9 @@ function gameManager.mousepressed(x, y, button)
            y >= 10 and y <= 50 then
             gameManager.updateStates()
         end
+
+        if gameManager.gamePhase == "routes" and not gameManager.showRouteConquestConfirm then
+            board.mousepressed(x, y, button)
         end
         
         -- Passa evento para o sistema de compra se estiver ativo

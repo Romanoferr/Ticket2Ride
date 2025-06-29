@@ -82,6 +82,28 @@ local function createGraph()
     end
 end
 
+-- Verifica se o ponto (mx, my) está próximo da linha (x1, y1)-(x2, y2)
+local function isMouseNearConnection(mx, my, x1, y1, x2, y2, threshold)
+    -- Vetor da linha
+    local dx, dy = x2 - x1, y2 - y1
+    local lengthSquared = dx * dx + dy * dy
+    if lengthSquared == 0 then
+        return false
+    end
+
+    -- Projeção escalar do ponto na linha (limitada entre 0 e 1)
+    local t = ((mx - x1) * dx + (my - y1) * dy) / lengthSquared
+    t = math.max(0, math.min(1, t))
+
+    -- Ponto mais próximo da linha ao ponto do mouse
+    local closestX = x1 + t * dx
+    local closestY = y1 + t * dy
+
+    -- Distância entre o ponto do mouse e o ponto mais próximo da linha
+    local dist = math.sqrt((mx - closestX)^2 + (my - closestY)^2)
+    return dist <= threshold
+end
+
 function board.load()
     createGraph()
 end
@@ -113,6 +135,37 @@ function board.draw()
         love.graphics.setColor(0, 0, 1)
         love.graphics.circle("fill", node.x, node.y, 5)
     end
+
+    if board.hoveredConnection then
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.setLineWidth(4)
+        love.graphics.line(board.hoveredConnection.x1, board.hoveredConnection.y1, board.hoveredConnection.x2, board.hoveredConnection.y2)
+        love.graphics.setLineWidth(1)
+    end
+end
+
+function board.getConnectionUnderMouse(mx, my)
+    local threshold = 10 -- pixels de tolerância
+    for _, connection in ipairs(board.connections) do
+        if isMouseNearConnection(mx, my, connection.x1, connection.y1, connection.x2, connection.y2, threshold) then
+            return connection
+        end
+    end
+    return nil
+end
+
+
+-- Tratamento de cliques
+function board.mousepressed(x, y, button)
+    if button ~= 1 then return end
+
+    local connection = board.getConnectionUnderMouse(x, y)
+    if connection then
+        lovebird.print("Rota clicada entre:", connection.x1, connection.y1, "e", connection.x2, connection.y2, "distância:", connection.distance)
+        return
+    end
+end
+
 end
 
 return board
