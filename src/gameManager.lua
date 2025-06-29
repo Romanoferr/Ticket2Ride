@@ -117,8 +117,8 @@ function gameManager.mousepressed(x, y, button)
         -- Verifica clique no botão de alternar interface
         if x >= love.graphics.getWidth() - 180 and x <= love.graphics.getWidth() - 10 and 
            y >= 10 and y <= 50 then
-            gameManager.showPurchaseInterface = not gameManager.showPurchaseInterface
-            return
+            gameManager.updateStates()
+        end
         end
         
         -- Passa evento para o sistema de compra se estiver ativo
@@ -132,14 +132,7 @@ function gameManager.keypressed(key)
     if gameManager.state == "game" then
         -- Alterna entre fases do jogo
         if key == "tab" then
-            if gameManager.gamePhase == "purchase" then
-                gameManager.gamePhase = "routes"
-                gameManager.showPurchaseInterface = false
-            else
-                gameManager.gamePhase = "purchase" 
-                gameManager.showPurchaseInterface = true
-            end
-            return
+            gameManager.updateStates()
         end
         
         -- Passa evento para o sistema de compra se estiver ativo
@@ -147,6 +140,18 @@ function gameManager.keypressed(key)
             trainCardPurchase.keypressed(key)
         end
     end
+end
+
+function gameManager.updateStates()
+    if gameManager.gamePhase == "purchase" then
+        gameManager.gamePhase = "routes"
+        gameManager.showPurchaseInterface = false
+        gameManager.showRouteConquestConfirm = false
+    else
+        gameManager.gamePhase = "purchase" 
+        gameManager.showPurchaseInterface = true
+    end
+    return
 end
 
 function gameManager.changeState(state)
