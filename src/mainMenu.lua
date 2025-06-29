@@ -33,6 +33,12 @@ function mainMenu.load()
 
     gameManager = require "gameManager"
 
+    musicaJogo = love.audio.newSource("assets/efeitos_sonoros/best-game-console-301284.mp3", "stream")
+
+    musicaJogo:setLooping(true)
+
+    musicaJogo:play()
+
     -- valores da fonte
 
     mainMenu.font = love.graphics.newFont(32)
