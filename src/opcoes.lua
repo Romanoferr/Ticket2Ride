@@ -52,8 +52,8 @@ button_values = {
 function opcoes.load()
     gameManager = require "gameManager"
 
-    musica = newSlider(650, 300, 400, 0.8, 0, 1, function () end)
-    sfx = newSlider(650, 400, 400, 0.8, 0, 1, function () end)
+    musica = newSlider(650, 300, 400, 0.8, 0, 1, function () end, "Música")
+    sfx = newSlider(650, 400, 400, 0.8, 0, 1, function () end, "SFX")
 
     background = love.graphics.newImage("assets/opcoes_menu/opcoes_menu.png")
 
@@ -90,11 +90,15 @@ function opcoes.draw()
 
     love.graphics.setColor(254, 67, 101)
 
+    love.graphics.print(musica.label, musica.font, musica.x - 330, musica.y -15)
+
     musica:draw()
 
     love.graphics.setLineWidth(6)
 
     love.graphics.setColor(254, 67, 101)
+
+    love.graphics.print(sfx.label, sfx.font, sfx.x - 330, sfx.y - 15)
 
     sfx:draw()
 

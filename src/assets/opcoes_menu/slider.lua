@@ -26,7 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 local slider = {}
 slider.__index = slider
 
-function newSlider(x, y, length, value, min, max, setter, style)
+function newSlider(x, y, length, value, min, max, setter, label, style)
     local s = {}
     s.value = (value - min) / (max - min)
     s.min = min
@@ -36,11 +36,15 @@ function newSlider(x, y, length, value, min, max, setter, style)
     s.y = y
     s.length = length
 
+    s.label = label
+
+    s.font = love.graphics.newFont(25)
+
     local p = style or {}
     s.width = p.width or length * 0.1
     s.orientation = p.orientation or 'horizontal'
-    s.track = p.track or 'rectangle'
-    s.knob = p.knob or 'rectangle'
+    s.track = p.track or 'roundrect'
+    s.knob = p.knob or 'circle'
 
     s.grabbed = false
     s.wasDown = true
