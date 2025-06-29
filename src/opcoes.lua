@@ -2,6 +2,8 @@ local gameManager
 
 local slider = require "assets/opcoes_menu/slider"
 
+local sound =  require "sound"
+
 local opcoes = {
     buttons = {}
 }
@@ -52,7 +54,12 @@ button_values = {
 function opcoes.load()
     gameManager = require "gameManager"
 
-    musica = newSlider(650, 300, 400, 40, 0, 100, function (v) love.audio.setVolume(v) end, "Música")
+    sound.load()
+
+    sound.play()
+
+    musica = newSlider(650, 300, 400, sound.getter(), 0, 100, function (v) sound.setter(v) end, "Música")
+
     sfx = newSlider(650, 400, 400, 40, 0, 100, function () end, "SFX")
 
     background = love.graphics.newImage("assets/opcoes_menu/opcoes_menu.png")

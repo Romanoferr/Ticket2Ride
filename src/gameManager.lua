@@ -1,5 +1,6 @@
 local mainMenu = require "mainMenu"
 local opcoes = require "opcoes"
+local sound = require "sound"
 local board = require "board"
 local train = require "train"
 local scoringBoard = require "scoringBoard"
@@ -18,7 +19,7 @@ local gameManager = {
 }
 
 local states = {
-    mainMenu = { mainMenu },
+    mainMenu = { mainMenu},
     opcoes = {opcoes},
     game = { board,
              train,
@@ -100,7 +101,7 @@ function gameManager.draw()
         love.graphics.print("Fase: " .. gameManager.gamePhase, 10, love.graphics.getHeight() - 40)
         if gameManager.gamePhase == "purchase" then
             love.graphics.print("Jogador " .. trainCardPurchase.getCurrentPlayer() .. " - Compras: " ..
-                              trainCardPurchase.getCardsDrawnThisTurn() .. "/2", 10, love.graphics.getHeight() - 20)
+                    trainCardPurchase.getCardsDrawnThisTurn() .. "/2", 10, love.graphics.getHeight() - 20)
         end
     else
         -- Generic state drawing for non-game states (like main menu)
@@ -119,7 +120,7 @@ function gameManager.mousepressed(x, y, button)
     if gameManager.state == "game" then
         -- Verifica clique no botão de alternar interface
         if x >= love.graphics.getWidth() - 180 and x <= love.graphics.getWidth() - 10 and
-           y >= 10 and y <= 50 then
+                y >= 10 and y <= 50 then
             gameManager.showPurchaseInterface = not gameManager.showPurchaseInterface
             return
         end

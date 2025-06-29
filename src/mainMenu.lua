@@ -1,5 +1,7 @@
 local menuFunctions = require "libs.mainMenuFunctions"
 
+local sound = require "sound"
+
 local gameManager
 
 local mainMenu = {
@@ -32,12 +34,6 @@ local button_values = {
 function mainMenu.load()
 
     gameManager = require "gameManager"
-
-    musicaJogo = love.audio.newSource("assets/efeitos_sonoros/best-game-console-301284.mp3", "stream")
-
-    musicaJogo:setLooping(true)
-
-    musicaJogo:play()
 
     -- valores da fonte
 
