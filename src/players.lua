@@ -64,12 +64,12 @@ function players.draw()
 
         for _, card in ipairs(player.trainCards) do
             love.graphics.print(trainCards.colorMap[card], 4 * (player.x + 20), player.y + 30 * _)
-            lovebird.print(string.format("Player %d Train Card: %s", player.id, trainCards.colorMap[card]))
+            -- lovebird.print(string.format("Player %d Train Card: %s", player.id, trainCards.colorMap[card]))
         end
 
         for _, ticket in ipairs(player.destinationCards) do
             love.graphics.print(ticket.startCity .. " - " .. ticket.endCity, 200 + (15*player.x), player.y + 30 * _)
-            lovebird.print(string.format("Player %d Destination Ticket: %s - %s", player.id, ticket.startCity, ticket.endCity))
+            -- lovebird.print(string.format("Player %d Destination Ticket: %s - %s", player.id, ticket.startCity, ticket.endCity))
         end
 
 
