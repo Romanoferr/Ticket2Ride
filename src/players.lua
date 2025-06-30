@@ -1,20 +1,28 @@
 local trainCards = require "trainCards"
 local lovebird = require "libs.lovebird"
 
-local players = {}
-
-local playerList = {}
+local players = {
+    playerList = {},
+    currentPlayer = nil,
+}
 
 function players.add(player)
-    table.insert(playerList, player)
+    table.insert(players.playerList, player)
+    if not players.currentPlayer then
+        players.currentPlayer = player
+    end
 end
 
 function players.getAll()
-    return playerList
+    return players.playerList
+end
+
+function players.total()
+    return #players.playerList
 end
 
 function players.assignTrainCards(playerId, cards)
-    for _, player in ipairs(playerList) do
+    for _, player in ipairs(players.playerList) do
         if player.id == playerId then
             player.trainCards = player.trainCards or {}
             for _, card in ipairs(cards) do
@@ -26,7 +34,7 @@ function players.assignTrainCards(playerId, cards)
 end
 
 function players.assignDestinationCards(playerId, cards)
-    for _, player in ipairs(playerList) do
+    for _, player in ipairs(players.playerList) do
         if player.id == playerId then
             player.destinationCards = player.destinationCards or {}
             for _, ticket in ipairs(cards) do
@@ -39,7 +47,7 @@ end
 
 -- get cards per player
 function players.getTrainCards(playerId)
-    for _, player in ipairs(playerList) do
+    for _, player in ipairs(players.playerList) do
         if player.id == playerId then
             return player.trainCards or {}
         end
@@ -48,7 +56,7 @@ function players.getTrainCards(playerId)
 end
 
 function players.getDestinationCards(playerId)
-    for _, player in ipairs(playerList) do
+    for _, player in ipairs(players.playerList) do
         if player.id == playerId then
             return player.destinationCards or {}
         end
@@ -74,6 +82,34 @@ function players.draw()
 
 
     end
+end
+
+function players.getCurrent()
+    if not players.currentPlayer and #players.playerList > 0 then
+        players.currentPlayer = players.playerList[1]
+    end
+    return players.currentPlayer
+end
+
+
+function players.next()
+    local current = players.currentPlayer
+    if not current then
+        players.currentPlayer = players.playerList[1]
+        return players.currentPlayer
+    end
+
+    for i, p in ipairs(players.playerList) do
+        if p.id == current.id then
+            local nextIndex = (i % #players.playerList) + 1
+            players.currentPlayer = players.playerList[nextIndex]
+            return players.currentPlayer
+        end
+    end
+
+    -- fallback: se não encontrar o atual na lista (caso raro)
+    players.currentPlayer = players.playerList[1]
+    return players.currentPlayer
 end
 
 return players

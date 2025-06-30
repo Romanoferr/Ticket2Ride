@@ -7,8 +7,8 @@ local trainCardPurchase = {}
 
 -- Estado do sistema de compra
 local gameState = {
-    currentPlayer = 1,
-    totalPlayers = 3,
+    currentPlayer = nil,
+    totalPlayers = nil,
     cardsDrawnThisTurn = 0,
     maxCardsPerTurn = 2,
     turnEnded = false,
@@ -50,6 +50,8 @@ end
 
 -- Função principal de inicialização
 function trainCardPurchase.load()
+    gameState.currentPlayer = players.getCurrent().id
+    gameState.totalPlayers = players.total()
     initializeFaceUpCards()
     showMessage("Vez do Jogador " .. gameState.currentPlayer, 2)
 end
@@ -151,7 +153,7 @@ end
 
 -- Próximo jogador
 local function nextPlayer()
-    gameState.currentPlayer = (gameState.currentPlayer % gameState.totalPlayers) + 1
+    gameState.currentPlayer = players.next().id
     gameState.cardsDrawnThisTurn = 0
     gameState.turnEnded = false
     showMessage("Vez do Jogador " .. gameState.currentPlayer, 1.5)
