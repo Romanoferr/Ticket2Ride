@@ -10,6 +10,9 @@ local board = {
     pointerCursor = nil,
     defaultCursor = nil,
     hoveredConnection = nil,
+    background = nil,
+    scaleX = nil,
+    scaleY = nil,
 }
 
 -- Função para ler arquivos CSV
@@ -114,6 +117,20 @@ end
 function board.load()
     board.pointerCursor = love.mouse.getSystemCursor("hand")
     board.defaultCursor = love.mouse.getSystemCursor("arrow")
+    board.background = love.graphics.newImage("assets/board.jpeg")
+
+    -- Pega o tamanho da tela
+    local screenWidth = love.graphics.getWidth()
+    local screenHeight = love.graphics.getHeight()
+
+    -- Pega o tamanho da imagem
+    local imgWidth = board.background:getWidth()
+    local imgHeight = board.background:getHeight()
+
+    -- Calcula escala para caber na tela
+    board.scaleX = screenWidth / imgWidth
+    board.scaleY = screenHeight / imgHeight
+
     createGraph()
 end
 
@@ -122,6 +139,8 @@ function board.update(dt)
 end
 
 function board.draw()
+    love.graphics.draw(board.background, 0, 0, 0, board.scaleX, board.scaleY)
+
     local colorMap = {
         R = {1, 0, 0}, -- Red
         B = {0, 0, 1}, -- Blue
