@@ -1,8 +1,18 @@
+local train = require "train"
+local players = require "players"
+local popup = require "libs.popup"
 local json = require "libs.dkjson" -- biblioteca JSON para Lua
+local lovebird = require "libs.lovebird"
 
 local board = {
     nodes = {},
-    connections = {}
+    connections = {},
+    pointerCursor = nil,
+    defaultCursor = nil,
+    hoveredConnection = nil,
+    background = nil,
+    scaleX = nil,
+    scaleY = nil,
 }
 
 -- Função para ler arquivos CSV
@@ -82,7 +92,45 @@ local function createGraph()
     end
 end
 
+-- Verifica se o ponto (mx, my) está próximo da linha (x1, y1)-(x2, y2)
+local function isMouseNearConnection(mx, my, x1, y1, x2, y2, threshold)
+    -- Vetor da linha
+    local dx, dy = x2 - x1, y2 - y1
+    local lengthSquared = dx * dx + dy * dy
+    if lengthSquared == 0 then
+        return false
+    end
+
+    -- Projeção escalar do ponto na linha (limitada entre 0 e 1)
+    local t = ((mx - x1) * dx + (my - y1) * dy) / lengthSquared
+    t = math.max(0, math.min(1, t))
+
+    -- Ponto mais próximo da linha ao ponto do mouse
+    local closestX = x1 + t * dx
+    local closestY = y1 + t * dy
+
+    -- Distância entre o ponto do mouse e o ponto mais próximo da linha
+    local dist = math.sqrt((mx - closestX)^2 + (my - closestY)^2)
+    return dist <= threshold
+end
+
 function board.load()
+    board.pointerCursor = love.mouse.getSystemCursor("hand")
+    board.defaultCursor = love.mouse.getSystemCursor("arrow")
+    board.background = love.graphics.newImage("assets/board.jpeg")
+
+    -- Pega o tamanho da tela
+    local screenWidth = love.graphics.getWidth()
+    local screenHeight = love.graphics.getHeight()
+
+    -- Pega o tamanho da imagem
+    local imgWidth = board.background:getWidth()
+    local imgHeight = board.background:getHeight()
+
+    -- Calcula escala para caber na tela
+    board.scaleX = screenWidth / imgWidth
+    board.scaleY = screenHeight / imgHeight
+
     createGraph()
 end
 
@@ -91,6 +139,8 @@ function board.update(dt)
 end
 
 function board.draw()
+    love.graphics.draw(board.background, 0, 0, 0, board.scaleX, board.scaleY)
+
     local colorMap = {
         R = {1, 0, 0}, -- Red
         B = {0, 0, 1}, -- Blue
@@ -112,6 +162,102 @@ function board.draw()
     for _, node in pairs(board.nodes) do
         love.graphics.setColor(0, 0, 1)
         love.graphics.circle("fill", node.x, node.y, 5)
+    end
+
+    if board.hoveredConnection then
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.setLineWidth(4)
+        love.graphics.line(board.hoveredConnection.x1, board.hoveredConnection.y1, board.hoveredConnection.x2, board.hoveredConnection.y2)
+        love.graphics.setLineWidth(1)
+    end
+end
+
+function board.getConnectionUnderMouse(mx, my)
+    local threshold = 10 -- pixels de tolerância
+    for _, connection in ipairs(board.connections) do
+        if isMouseNearConnection(mx, my, connection.x1, connection.y1, connection.x2, connection.y2, threshold) then
+            return connection
+        end
+    end
+    return nil
+end
+
+
+-- Tratamento de cliques
+function board.mousepressed(x, y, button)
+    if button ~= 1 then return end
+
+    local connection = board.getConnectionUnderMouse(x, y)
+    if not connection then
+        return
+    end
+    
+    lovebird.print("Rota clicada entre:", connection.x1, connection.y1, "e", connection.x2, connection.y2, "distância:", connection.distance)
+
+    local currentPlayer = players.getCurrent()
+    
+    
+    local playerCardsColor = 0
+    local cardColor = nil
+
+    if connection.color == "X" then
+        playerCardsColor, cardColor = players.countMaxTrainCards(currentPlayer.id)
+    else
+        playerCardsColor = players.countTrainCardsByColor(currentPlayer.id, connection.color)
+    end
+
+    if playerCardsColor ~= connection.distance then
+        popup.show(
+            "Você não possui cartas suficiente.",  -- Mensagem
+            "Ok",  -- Texto do botão
+            nil,  -- Nenhum texto para o segundo botão
+            function() 
+                return
+            end,
+            nil
+        )
+        return
+    end
+    
+    if currentPlayer.canConquerRoute then
+        popup.show(
+            "Você deseja conquistar a rota selecionada?.",  -- Mensagem
+            "Sim",  -- Texto do botão
+            "Não",  -- Nenhum texto para o segundo botão
+            function()
+                local colorToRemove = nil
+                if not cardColor then colorToRemove = connection.color else colorToRemove = cardColor end
+                
+                players.removeCardsFromPlayerDeckByColor(currentPlayer.id, colorToRemove)
+                train.conquer(connection, currentPlayer.id)
+                players.next()
+            end,
+            function() 
+                return
+            end
+        )
+    else
+        popup.show(
+            "Você já comprou carta nessa rodada.",  -- Mensagem
+            "Ok",  -- Texto do botão
+            nil,  -- Nenhum texto para o segundo botão
+            function() 
+                return
+            end,
+            nil
+        )
+    end
+
+    return
+end
+
+-- Tratamento de movimento, mudança de cursor para feedback ao usuário
+function board.mousemoved(x, y, dx, dy)
+    board.hoveredConnection = board.getConnectionUnderMouse(x, y)
+    if board.hoveredConnection then
+        love.mouse.setCursor(board.pointerCursor)
+    else
+        love.mouse.setCursor(board.defaultCursor)
     end
 end
 

@@ -9,13 +9,15 @@ local trainCards = require "trainCards"
 local setupGame = require "setupGame"
 local players = require "players"
 local trainCardPurchase = require "trainCardPurchase"
+local lovebird = require "libs.lovebird"
 
 local gameManager = {
     state = "mainMenu",
     score = 0,
     player = nil,
     gamePhase = "purchase", -- "purchase", "routes", "tickets", etc.
-    showPurchaseInterface = true -- Controla se mostra a interface de compra
+    showPurchaseInterface = true, -- Controla se mostra a interface de compra
+    showRouteConquestConfirm = false, -- Controla se mostra a confirmação de conquista
 }
 
 local states = {
@@ -26,8 +28,10 @@ local states = {
              scoringBoard,
              tickets,
              trainCards,
+             players,
              setupGame,
-             players }
+             trainCardPurchase,
+            }
 }
 
 function gameManager.load()
@@ -37,17 +41,13 @@ function gameManager.load()
     sound.play()
 
     -- Use generic state loading for flexibility
-    for _, state in ipairs(states[gameManager.state]) do
+    lovebird.print("Load: " .. gameManager.state)
+    for i, state in ipairs(states[gameManager.state]) do
+        lovebird.print(string.format("Load #%d: %s", i, tostring(state)))
         if state.load then
             state.load()
         end
     end
-
-    -- Initialize train card purchase system when in game state
-    if gameManager.state == "game" then
-        trainCardPurchase.load()
-    end
-
     -- Additional game manager initialization if needed
 end
 
@@ -104,8 +104,8 @@ function gameManager.draw()
         love.graphics.setColor(1, 1, 1)
         love.graphics.print("Fase: " .. gameManager.gamePhase, 10, love.graphics.getHeight() - 40)
         if gameManager.gamePhase == "purchase" then
-            love.graphics.print("Jogador " .. trainCardPurchase.getCurrentPlayer() .. " - Compras: " ..
-                    trainCardPurchase.getCardsDrawnThisTurn() .. "/2", 10, love.graphics.getHeight() - 20)
+            love.graphics.print("Jogador " .. trainCardPurchase.getCurrentPlayerId() .. " - Compras: " .. 
+                              trainCardPurchase.getCardsDrawnThisTurn() .. "/2", 10, love.graphics.getHeight() - 20)
         end
     else
         -- Generic state drawing for non-game states (like main menu)
@@ -123,10 +123,13 @@ end
 function gameManager.mousepressed(x, y, button)
     if gameManager.state == "game" then
         -- Verifica clique no botão de alternar interface
-        if x >= love.graphics.getWidth() - 180 and x <= love.graphics.getWidth() - 10 and
-                y >= 10 and y <= 50 then
-            gameManager.showPurchaseInterface = not gameManager.showPurchaseInterface
-            return
+        if x >= love.graphics.getWidth() - 180 and x <= love.graphics.getWidth() - 10 and 
+           y >= 10 and y <= 50 then
+            gameManager.updateStates()
+        end
+
+        if gameManager.gamePhase == "routes" and not gameManager.showRouteConquestConfirm then
+            board.mousepressed(x, y, button)
         end
 
         -- Passa evento para o sistema de compra se estiver ativo
@@ -136,18 +139,20 @@ function gameManager.mousepressed(x, y, button)
     end
 end
 
+-- Funções para tratar eventos
+function gameManager.mousemoved(x, y, dx, dy)
+    if gameManager.state == "game" then
+        if gameManager.gamePhase == "routes" and not gameManager.showRouteConquestConfirm then
+            board.mousemoved(x, y, dx, dy)
+        end
+    end
+end
+
 function gameManager.keypressed(key)
     if gameManager.state == "game" then
         -- Alterna entre fases do jogo
         if key == "tab" then
-            if gameManager.gamePhase == "purchase" then
-                gameManager.gamePhase = "routes"
-                gameManager.showPurchaseInterface = false
-            else
-                gameManager.gamePhase = "purchase"
-                gameManager.showPurchaseInterface = true
-            end
-            return
+            gameManager.updateStates()
         end
 
         -- Passa evento para o sistema de compra se estiver ativo
@@ -157,7 +162,21 @@ function gameManager.keypressed(key)
     end
 end
 
+function gameManager.updateStates()
+    if gameManager.gamePhase == "purchase" then
+        gameManager.gamePhase = "routes"
+        gameManager.showPurchaseInterface = false
+        gameManager.showRouteConquestConfirm = false
+    else
+        gameManager.gamePhase = "purchase" 
+        gameManager.showPurchaseInterface = true
+        trainCardPurchase.updateState()
+    end
+    return
+end
+
 function gameManager.changeState(state)
+    lovebird.print("Changed state: " .. state)
     if states[state] then
 
         for _, mod in ipairs(states[gameManager.state] or {}) do

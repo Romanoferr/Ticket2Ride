@@ -18,6 +18,7 @@ function setupGame.load()
     for i = 1, 3 do -- 3 jogadores
         players.add({
             id = i,
+            canConquerRoute = true,
             color = playerColors[i].color,
             colorName = playerColors[i].name,
             x = startX + (i - 1) * 10, -- Offset 
