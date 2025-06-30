@@ -6,7 +6,8 @@ local tickets = require "destinationTicketCards"
 local trainCards = require "trainCards"
 local setupGame = require "setupGame"
 local players = require "players"
-local trainCardPurchase = require "trainCardPurchase" 
+local trainCardPurchase = require "trainCardPurchase"
+local lovebird = require "libs.lovebird"
 
 local gameManager = {
     state = "mainMenu",
@@ -24,23 +25,21 @@ local states = {
              scoringBoard,
              tickets,
              trainCards,
+             players,
              setupGame,
-             players }
+             trainCardPurchase,
+            }
 }
 
 function gameManager.load()
     -- Use generic state loading for flexibility
-    for _, state in ipairs(states[gameManager.state]) do
+    lovebird.print("Load: " .. gameManager.state)
+    for i, state in ipairs(states[gameManager.state]) do
+        lovebird.print(string.format("Load #%d: %s", i, tostring(state)))
         if state.load then
             state.load()
         end
     end
-    
-    -- Initialize train card purchase system when in game state
-    if gameManager.state == "game" then
-        trainCardPurchase.load()
-    end
-    
     -- Additional game manager initialization if needed
 end
 
@@ -168,6 +167,7 @@ function gameManager.updateStates()
 end
 
 function gameManager.changeState(state)
+    lovebird.print("Changed state: " .. state)
     if states[state] then
         gameManager.state = state
         gameManager.load()
