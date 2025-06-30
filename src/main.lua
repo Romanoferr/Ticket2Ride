@@ -1,6 +1,7 @@
 
 local gameManager = require "gameManager"
 local lovebird = require "libs.lovebird"
+local popup = require "libs.popup"
 local settings = {
     fullscreen = false,
     screenScaler = 1,
@@ -29,10 +30,13 @@ function love.draw()
     love.graphics.setColor(0.8, 0.8, 0.8)
     love.graphics.print("TAB: Alternar fase do jogo", love.graphics.getWidth() - 200, love.graphics.getHeight() - 60)
     love.graphics.print("Clique no botão: Alternar view", love.graphics.getWidth() - 200, love.graphics.getHeight() - 40)
+
+    popup.draw()
 end
 --  Tratamento de cliques do mouse
 function love.mousepressed(x, y, button, istouch, presses)
     gameManager.mousepressed(x, y, button)
+    popup.mousepressed(x, y, button)
 end
 -- Tratamento de movimento do mouse (usado para feedback)
 function love.mousemoved(x, y, dx, dy, istouch)
