@@ -1,3 +1,4 @@
+local train = require "train"
 local json = require "libs.dkjson" -- biblioteca JSON para Lua
 local lovebird = require "libs.lovebird"
 
@@ -166,10 +167,15 @@ function board.mousepressed(x, y, button)
     if button ~= 1 then return end
 
     local connection = board.getConnectionUnderMouse(x, y)
-    if connection then
-        lovebird.print("Rota clicada entre:", connection.x1, connection.y1, "e", connection.x2, connection.y2, "distância:", connection.distance)
+    if not connection then
         return
     end
+    
+    lovebird.print("Rota clicada entre:", connection.x1, connection.y1, "e", connection.x2, connection.y2, "distância:", connection.distance)
+
+    local playerId = 1 -- ou variável de controle `currentPlayerId`
+    train.conquer(connection, playerId)
+    return
 end
 
 -- Tratamento de movimento, mudança de cursor para feedback ao usuário
