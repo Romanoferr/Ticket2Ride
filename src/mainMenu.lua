@@ -1,5 +1,7 @@
 local menuFunctions = require "libs.mainMenuFunctions"
 
+local sound = require "sound"
+
 local gameManager
 
 local mainMenu = {
@@ -21,7 +23,7 @@ local button_values = {
       end },
     { "Opções",
       function()
-          print("Iniciando opções")
+          gameManager.changeState("opcoes")
       end },
     { "Sair",
       function()
@@ -39,7 +41,7 @@ function mainMenu.load()
 
     -- load dos botoes e seus valores
 
-    menuFunctions.loadButtons(mainMenu.buttons, button_values)
+    menuFunctions.loadButtons(mainMenu, button_values)
 
     -- load dos frames da animacao de background
 
@@ -80,7 +82,7 @@ function mainMenu.draw()
     -- desenho dos botoes
     for _, b in ipairs(mainMenu.buttons) do
 
-        -- ultima botao selecionado
+        -- ultimo botao selecionado
         b.last = b.now
 
         -- cor inicial do botao
