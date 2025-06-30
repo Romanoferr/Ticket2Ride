@@ -1,4 +1,6 @@
 local train = require "train"
+local players = require "players"
+local popup = require "libs.popup"
 local json = require "libs.dkjson" -- biblioteca JSON para Lua
 local lovebird = require "libs.lovebird"
 
@@ -173,8 +175,60 @@ function board.mousepressed(x, y, button)
     
     lovebird.print("Rota clicada entre:", connection.x1, connection.y1, "e", connection.x2, connection.y2, "distância:", connection.distance)
 
-    local playerId = 1 -- ou variável de controle `currentPlayerId`
-    train.conquer(connection, playerId)
+    local currentPlayer = players.getCurrent()
+    
+    
+    local playerCardsColor = 0
+    local cardColor = nil
+
+    if connection.color == "X" then
+        playerCardsColor, cardColor = players.countMaxTrainCards(currentPlayer.id)
+    else
+        playerCardsColor = players.countTrainCardsByColor(currentPlayer.id, connection.color)
+    end
+
+    if playerCardsColor ~= connection.distance then
+        popup.show(
+            "Você não possui cartas suficiente.",  -- Mensagem
+            "Ok",  -- Texto do botão
+            nil,  -- Nenhum texto para o segundo botão
+            function() 
+                return
+            end,
+            nil
+        )
+        return
+    end
+    
+    if currentPlayer.canConquerRoute then
+        popup.show(
+            "Você deseja conquistar a rota selecionada?.",  -- Mensagem
+            "Sim",  -- Texto do botão
+            "Não",  -- Nenhum texto para o segundo botão
+            function()
+                local colorToRemove = nil
+                if not cardColor then colorToRemove = connection.color else colorToRemove = cardColor end
+                
+                players.removeCardsFromPlayerDeckByColor(currentPlayer.id, colorToRemove)
+                train.conquer(connection, currentPlayer.id)
+                players.next()
+            end,
+            function() 
+                return
+            end
+        )
+    else
+        popup.show(
+            "Você já comprou carta nessa rodada.",  -- Mensagem
+            "Ok",  -- Texto do botão
+            nil,  -- Nenhum texto para o segundo botão
+            function() 
+                return
+            end,
+            nil
+        )
+    end
+
     return
 end
 

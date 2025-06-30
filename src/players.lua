@@ -112,4 +112,76 @@ function players.next()
     return players.currentPlayer
 end
 
+function players.resetConquerRouteStatus()
+    for _, player in ipairs(players.playerList) do
+        player.canConquerRoute = true
+    end
+end
+
+function players.countTrainCardsByColor(playerId, color)
+    local count = 0
+    local cards = players.getTrainCards(playerId)
+
+    lovebird.print("Player " .. playerId .. " procurando a cor " .. color)
+
+    for _, card in ipairs(cards) do
+        lovebird.print("Player " .. playerId .. " tem carta " .. card)
+        if (card == color) or (card == "JOKER") then
+            count = count + 1
+            lovebird.print("Player " .. playerId .. " tem " .. count .. " carta(s)")
+        end
+    end
+
+    return count
+end
+
+function players.countMaxTrainCards(playerId)
+    local playerCards = players.getTrainCards(playerId)
+    local colorCounts = {}
+
+    for _, card in ipairs(playerCards) do
+        colorCounts[card] = (colorCounts[card] or 0) + 1
+    end
+
+    local mostCommonColor = nil
+    local maxCount = 0
+
+    for color, count in pairs(colorCounts) do
+        if count > maxCount then
+            mostCommonColor = color
+            maxCount = count
+        end
+    end
+
+    lovebird.print("Player " .. playerId .. " tem " .. maxCount .. " carta(s) da cor " .. mostCommonColor)
+
+    return maxCount, mostCommonColor
+end
+
+-- Função para remover do baralho do jogador a mesma quantidade de cartas que ele tem de uma cor
+function players.removeCardsFromPlayerDeckByColor(playerId, color)
+    local countToRemove = players.countTrainCardsByColor(playerId, color)
+    local cards = players.getTrainCards(playerId)
+
+    if countToRemove == 0 then
+        lovebird.print("Player " .. playerId .. " has no " .. trainCards.colorMap[color] .. " cards.")
+        return
+    end
+
+    local removed = 0
+    local i = 1
+
+    while i <= #cards and removed < countToRemove do
+        if cards[i] == color or cards[i] == "JOKER" then
+            table.remove(cards, i)
+            removed = removed + 1
+            -- não incrementa i porque a lista diminuiu
+        else
+            i = i + 1
+        end
+    end
+
+    lovebird.print("Removed " .. removed .. " " .. trainCards.colorMap[color] .. " cards from player " .. playerId .. "'s deck.")
+end
+
 return players
