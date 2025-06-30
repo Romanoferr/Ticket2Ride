@@ -96,7 +96,7 @@ function gameManager.draw()
         love.graphics.setColor(1, 1, 1)
         love.graphics.print("Fase: " .. gameManager.gamePhase, 10, love.graphics.getHeight() - 40)
         if gameManager.gamePhase == "purchase" then
-            love.graphics.print("Jogador " .. trainCardPurchase.getCurrentPlayer() .. " - Compras: " .. 
+            love.graphics.print("Jogador " .. trainCardPurchase.getCurrentPlayerId() .. " - Compras: " .. 
                               trainCardPurchase.getCardsDrawnThisTurn() .. "/2", 10, love.graphics.getHeight() - 20)
         end
     else
@@ -162,6 +162,7 @@ function gameManager.updateStates()
     else
         gameManager.gamePhase = "purchase" 
         gameManager.showPurchaseInterface = true
+        trainCardPurchase.updateState()
     end
     return
 end

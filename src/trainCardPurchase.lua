@@ -7,6 +7,7 @@ local trainCardPurchase = {}
 
 -- Estado do sistema de compra
 local gameState = {
+    currentPlayerId = nil,
     currentPlayer = nil,
     totalPlayers = nil,
     cardsDrawnThisTurn = 0,
@@ -50,10 +51,11 @@ end
 
 -- Função principal de inicialização
 function trainCardPurchase.load()
-    gameState.currentPlayer = players.getCurrent().id
+    gameState.currentPlayerId = players.getCurrent().id
+    gameState.currentPlayer = players.getCurrent()
     gameState.totalPlayers = players.total()
     initializeFaceUpCards()
-    showMessage("Vez do Jogador " .. gameState.currentPlayer, 2)
+    showMessage("Vez do Jogador " .. gameState.currentPlayerId, 2)
 end
 
 -- Atualização básica do timer de mensagens
@@ -107,12 +109,12 @@ local function buyFromDeck()
     end
     
     local card = trainCards.drawCard()
-    players.assignTrainCards(gameState.currentPlayer, {card})
+    players.assignTrainCards(gameState.currentPlayerId, {card})
     gameState.cardsDrawnThisTurn = gameState.cardsDrawnThisTurn + 1
     
     local cardName = trainCards.colorMap[card] or card
     showMessage("Comprou " .. cardName .. " do deck", 1.5)
-    lovebird.print("Player " .. gameState.currentPlayer .. " drew " .. cardName .. " from deck")
+    lovebird.print("Player " .. gameState.currentPlayerId .. " drew " .. cardName .. " from deck")
     
     return true
 end
@@ -124,7 +126,7 @@ local function buyFaceUpCard(index)
     end
     
     local card = gameState.faceUpCards[index]
-    players.assignTrainCards(gameState.currentPlayer, {card})
+    players.assignTrainCards(gameState.currentPlayerId, {card})
     
     -- Se é locomotiva, termina o turno imediatamente
     if card == "JOKER" then
@@ -142,7 +144,7 @@ local function buyFaceUpCard(index)
     replaceFaceUpCard(index)
     checkTooManyLocomotives()
     
-    lovebird.print("Player " .. gameState.currentPlayer .. " bought face-up card: " .. (trainCards.colorMap[card] or card))
+    lovebird.print("Player " .. gameState.currentPlayerId .. " bought face-up card: " .. (trainCards.colorMap[card] or card))
     return true
 end
 
@@ -152,12 +154,16 @@ local function canDrawMore()
 end
 
 -- Próximo jogador
-local function nextPlayer()
-    gameState.currentPlayer = players.next().id
+local function nextPlayer(forced)
+    local next = forced or players.next()
+    gameState.currentPlayerId = next.id
+    gameState.currentPlayer = next
     gameState.cardsDrawnThisTurn = 0
     gameState.turnEnded = false
-    showMessage("Vez do Jogador " .. gameState.currentPlayer, 1.5)
-    lovebird.print("Next player: " .. gameState.currentPlayer)
+    showMessage("Vez do Jogador " .. gameState.currentPlayerId, 1.5)
+    lovebird.print("Next player: " .. gameState.currentPlayerId)
+
+    players.resetConquerRouteStatus()
 end
 
 -- Atualizar a função update para incluir controle de turnos
@@ -185,7 +191,7 @@ function trainCardPurchase.draw()
     love.graphics.print("COMPRA DE CARTAS DE TREM", 20, 20, 0, 1.5, 1.5)
     
     -- Informações do turno atual
-    love.graphics.print("Jogador Atual: " .. gameState.currentPlayer, 20, 60)
+    love.graphics.print("Jogador Atual: " .. gameState.currentPlayerId, 20, 60)
     love.graphics.print("Cartas compradas neste turno: " .. gameState.cardsDrawnThisTurn .. "/" .. gameState.maxCardsPerTurn, 20, 80)
     
     if canDrawMore() then
@@ -253,7 +259,7 @@ function trainCardPurchase.draw()
         local playerCards = players.getTrainCards(i)
         local cardCount = #playerCards
         
-        if i == gameState.currentPlayer then
+        if i == gameState.currentPlayerId then
             love.graphics.setColor(1, 1, 0) -- Destaque jogador atual
         else
             love.graphics.setColor(0.7, 0.7, 0.7)
@@ -274,6 +280,8 @@ function trainCardPurchase.mousepressed(x, y, button)
     if button ~= 1 or not canDrawMore() then -- Só clique esquerdo e se pode comprar
         return
     end
+
+    gameState.currentPlayer.canConquerRoute = false
     
     -- Clique no deck
     if x >= 50 and x <= 150 and y >= 150 and y <= 290 then
@@ -311,8 +319,8 @@ function trainCardPurchase.keypressed(key)
 end
 
 -- Obter estado atual (para integração)
-function trainCardPurchase.getCurrentPlayer()
-    return gameState.currentPlayer
+function trainCardPurchase.getCurrentPlayerId()
+    return gameState.currentPlayerId
 end
 
 function trainCardPurchase.canDrawCards()
@@ -322,4 +330,14 @@ end
 function trainCardPurchase.getCardsDrawnThisTurn()
     return gameState.cardsDrawnThisTurn
 end
+
+function trainCardPurchase.updateState()
+    -- Pega jogador atual atualizado, caso em que o jogador passa a vez comprando uma rota
+    updatedPlayer = players.getCurrent()
+
+    if gameState.currentPlayerId ~= updatedPlayer.id then
+        nextPlayer(updatedPlayer)
+    end
+end
+
 return trainCardPurchase
